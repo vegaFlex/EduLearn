@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -18,6 +19,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -25,7 +27,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'courses',
+
+    # Добавяме Tailwind
+    'tailwind',
+    'theme',  # Това e  Tailwind тема
 ]
+
+TAILWIND_APP_NAME = 'theme'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
