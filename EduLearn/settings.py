@@ -125,4 +125,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# print(config('SECRET_KEY'))
+AUTH_USER_MODEL = 'courses.UserProfile'
+
