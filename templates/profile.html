@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Профил{% endblock %}
+
+{% block content %}
+    <h2 class="text-2xl font-bold mb-4">Здравей, {{ user.email }}!</h2>
+    <p>Роля: {{ user.get_role_display }}</p>
+
+    {% if user.role == "teacher" %}
+        <p>Вие сте преподавател. Можете да създавате курсове.</p>
+        <a href="#" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
+            Добави курс
+        </a>
+    {% else %}
+        <p>Вие сте ученик. Можете да записвате курсове.</p>
+    {% endif %}
+
+    <a href="{% url 'logout' %}" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">
+        Изход
+    </a>
+{% endblock %}
