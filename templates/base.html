@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EduLearn{% endblock %}</title>
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <!-- Навигация -->
+    <nav class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{% url 'home' %}" class="text-xl font-bold">EduLearn</a>
+            <ul class="flex space-x-4">
+                <li><a href="{% url 'courses' %}" class="hover:underline">Курсове</a></li>
+                <li><a href="{% url 'admin:index' %}" class="hover:underline">Админ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Основно съдържание -->
+    <div class="container mx-auto p-6">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Футър -->
+    <footer class="bg-blue-600 text-white text-center p-4 mt-10">
+        <p>&copy; 2025 EduLearn - Всички права запазени.</p>
+    </footer>
+</body>
+</html>

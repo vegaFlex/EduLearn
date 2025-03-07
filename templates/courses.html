@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Курсове - EduLearn{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Всички курсове</h1>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    {% for course in courses %}
+    <div class="bg-white shadow-xl rounded-lg overflow-hidden transform transition-transform hover:scale-105">
+        <div class="p-4">
+            <h2 class="text-xl font-semibold text-gray-800">{{ course.title }}</h2>
+            <p class="text-gray-600 mt-2">{{ course.description|truncatechars:100 }}</p>
+            <p class="mt-4 text-blue-600 font-bold">{{ course.price }} лв.</p>
+            <a href="#" class="block mt-4 bg-blue-600 text-white py-2 px-4 text-center rounded-lg hover:bg-blue-700">
+                Виж повече
+            </a>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-gray-500">Няма налични курсове.</p>
+    {% endfor %}
+</div>
+{% endblock %}
+
