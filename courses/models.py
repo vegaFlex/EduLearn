@@ -1,11 +1,39 @@
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 
+# class UserProfile(AbstractUser):
+#     ROLE_CHOICES = (
+#         ('teacher', 'Преподавател'),
+#         ('student', 'Ученик'),
+#     )
+#     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
+#     bio = models.TextField(blank=True, null=True)
+#     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+#
+#     email = models.EmailField(unique=True)  # ЗАДЪЛЖИТЕЛНО unique=True, за да може да бъде USERNAME_FIELD
+#
+#     groups = models.ManyToManyField(Group, related_name="user_profiles", blank=True)
+#     user_permissions = models.ManyToManyField(Permission, related_name="user_profiles_permissions", blank=True)
+#
+#     USERNAME_FIELD = 'email'  # Използвам email вместо username
+#     REQUIRED_FIELDS = ['username']  # Django все още изисква username, но не го ползвам за вход
+#
+#     def __str__(self):
+#         return self.username
+
+from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.db import models
+
+
 class UserProfile(AbstractUser):
     ROLE_CHOICES = (
         ('teacher', 'Преподавател'),
         ('student', 'Ученик'),
     )
+
+    email = models.EmailField(unique=True)  # 🔹 Email ще бъде уникален и ще служи за вход
+    username = models.CharField(max_length=150, blank=True, null=True,
+                                unique=True)  # 🔹 username няма да се ползва активно
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
     bio = models.TextField(blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
@@ -13,8 +41,16 @@ class UserProfile(AbstractUser):
     groups = models.ManyToManyField(Group, related_name="user_profiles", blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name="user_profiles_permissions", blank=True)
 
+    USERNAME_FIELD = "email"  # Влизам с email вместо username
+    REQUIRED_FIELDS = []  # Django очаква допълнителни задължителни полета, но ги премахвам
+
+    def save(self, *args, **kwargs):
+        if not self.username:
+            self.username = self.email  # Ако username е празно, попълвам го с email
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return self.username
+        return self.email
 
 
 class Course(models.Model):

@@ -2,73 +2,92 @@
 {% block title %}Регистрация{% endblock %}
 
 {% block content %}
-<div class="flex justify-center items-center min-h-screen bg-gray-100">
-    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
-        <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Регистрация</h2>
-        <form method="post" class="space-y-4">
-            {% csrf_token %}
+    <div class="flex justify-center items-center min-h-screen bg-gray-100">
+        <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
+            <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Регистрация</h2>
 
-            <!-- Поле за Email -->
-            <div>
-                <label class="block text-gray-700 font-semibold mb-1">Email:</label>
-                <input type="email" name="email" required
-                    class="w-full px-4 py-3 border border-gray-400 bg-gray-100 text-gray-900 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500">
-            </div>
+            {% if messages %}
+                <div class="mb-4">
+                    {% for message in messages %}
+                        <div class="px-4 py-3 rounded-lg text-white shadow-lg
+                        {% if message.tags == 'success' %} bg-green-500
+                        {% elif message.tags == 'error' %} bg-red-500
+                        {% elif message.tags == 'info' %} bg-blue-500
+                        {% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
-            <!-- Поле за Парола с икона -->
-            <div class="relative">
-                <label class="block text-gray-700 font-semibold mb-1">Парола:</label>
-                <input type="password" name="password1" id="password1" required
-                    class="w-full px-4 py-3 pr-12 border border-gray-400 bg-gray-100 text-gray-900 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500">
-                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer" onclick="togglePassword('password1')">
+
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+
+                <!-- Поле за Email -->
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-1">Email:</label>
+                    <input type="email" name="email" required
+                           class="w-full px-4 py-3 border border-gray-400 bg-gray-100 text-gray-900 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <!-- Поле за Парола с икона -->
+                <div class="relative">
+                    <label class="block text-gray-700 font-semibold mb-1">Парола:</label>
+                    <input type="password" name="password1" id="password1" required
+                           class="w-full px-4 py-3 pr-12 border border-gray-400 bg-gray-100 text-gray-900 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500">
+                    <span class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                          onclick="togglePassword('password1')">
                     👁
                 </span>
-            </div>
+                </div>
 
-            <!-- Поле за Потвърждение на Парола с икона -->
-            <div class="relative">
-                <label class="block text-gray-700 font-semibold mb-1">Потвърдете паролата:</label>
-                <input type="password" name="password2" id="password2" required
-                    class="w-full px-4 py-3 pr-12 border border-gray-400 bg-gray-100 text-gray-900 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500">
-                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer" onclick="togglePassword('password2')">
+                <!-- Поле за Потвърждение на Парола с икона -->
+                <div class="relative">
+                    <label class="block text-gray-700 font-semibold mb-1">Потвърдете паролата:</label>
+                    <input type="password" name="password2" id="password2" required
+                           class="w-full px-4 py-3 pr-12 border border-gray-400 bg-gray-100 text-gray-900 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500">
+                    <span class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                          onclick="togglePassword('password2')">
                     👁
                 </span>
-            </div>
+                </div>
 
-            <!-- Поле за Роля -->
-            <div>
-                <label class="block text-gray-700 font-semibold mb-1">Роля:</label>
-                <select name="role"
-                    class="w-full px-4 py-3 border border-gray-400 bg-gray-100 text-gray-900 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500 appearance-none">
-                    <option value="student">Ученик</option>
-                    <option value="teacher">Преподавател</option>
-                </select>
-            </div>
+                <!-- Поле за Роля -->
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-1">Роля:</label>
+                    <select name="role"
+                            class="w-full px-4 py-3 border border-gray-400 bg-gray-100 text-gray-900 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500 appearance-none">
+                        <option value="student">Ученик</option>
+                        <option value="teacher">Преподавател</option>
+                    </select>
+                </div>
 
-            <!-- Бутон за регистрация -->
-            <button type="submit"
-                class="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white py-3 px-4 rounded-lg hover:scale-105 transform transition duration-300 font-semibold shadow-md">
-                Регистрирай се
-            </button>
-        </form>
+                <!-- Бутон за регистрация -->
+                <button type="submit"
+                        class="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white py-3 px-4 rounded-lg hover:scale-105 transform transition duration-300 font-semibold shadow-md">
+                    Регистрирай се
+                </button>
+            </form>
 
-        <!-- Линк за вход -->
-        <p class="mt-4 text-center text-gray-700">
-            Вече имате акаунт? <a href="{% url 'login' %}" class="text-blue-600 hover:underline font-semibold">Влезте тук</a>.
-        </p>
+            <!-- Линк за вход -->
+            <p class="mt-4 text-center text-gray-700">
+                Вече имате акаунт? <a href="{% url 'login' %}" class="text-blue-600 hover:underline font-semibold">Влезте
+                тук</a>.
+            </p>
+        </div>
     </div>
-</div>
 
-<!-- JavaScript за скриване/показване на паролата -->
-<script>
-    function togglePassword(inputId) {
-        let inputField = document.getElementById(inputId);
-        if (inputField.type === "password") {
-            inputField.type = "text";
-        } else {
-            inputField.type = "password";
+    <!-- JavaScript за скриване/показване на паролата -->
+    <script>
+        function togglePassword(inputId) {
+            let inputField = document.getElementById(inputId);
+            if (inputField.type === "password") {
+                inputField.type = "text";
+            } else {
+                inputField.type = "password";
+            }
         }
-    }
-</script>
+    </script>
 
 {% endblock %}
