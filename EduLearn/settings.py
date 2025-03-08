@@ -34,7 +34,7 @@ INSTALLED_APPS = [
 
     'courses',
 
-    # Добавяме Tailwind
+    # Добавям Tailwind
     'tailwind',
     'theme',  # Това e  Tailwind тема
 ]

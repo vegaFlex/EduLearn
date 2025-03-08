@@ -6,14 +6,48 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from .models import Course
 from .forms import CourseForm
-
+from django.db.models import Q  # Импортирам за търсене с OR
 
 def index(request):
     return render(request, "index.html")  # ще използва index.html за начална страница
 
+# def courses_list(request):
+#     courses = Course.objects.all()
+#     return render(request, "courses.html", {"courses": courses})
+
 def courses_list(request):
+    query = request.GET.get('q')
+    category = request.GET.get('category')
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+
+    min_rating = request.GET.get('rating')  # Взимам стойността на рейтинга от заявката
+
     courses = Course.objects.all()
-    return render(request, "courses.html", {"courses": courses})
+
+    if query:
+        courses = courses.filter(Q(title__icontains=query) | Q(description__icontains=query))
+
+    if category:
+        courses = courses.filter(category=category)
+
+    if min_price:
+        courses = courses.filter(price__gte=min_price)
+
+    if max_price:
+        courses = courses.filter(price__lte=max_price)
+
+    if min_rating:  #Филтър по рейтинг
+        courses = courses.filter(rating__gte=min_rating)
+
+    return render(request, "courses.html", {
+        "courses": courses,
+        "query": query,
+        "category": category,
+        "min_price": min_price,
+        "max_price": max_price,
+        "min_rating": min_rating,
+    })
 
 
 def register(request):
@@ -135,3 +169,4 @@ def delete_course(request, course_id):
         return redirect("courses")
 
     return render(request, "delete_course.html", {"course": course})
+

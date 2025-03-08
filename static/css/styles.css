@@ -1,3 +1,56 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*============================*/
+
+.search-form {
+    max-width: 1200px; /* Ограничаваме ширината на формата */
+    margin: 0 auto; /* Центрираме формата */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Разстояние между елементите */
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-form input,
+.search-form select,
+.search-form button {
+    flex: 1; /* Разтяга се според размера */
+    min-width: 150px; /* Минимална ширина на елементите */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.search-form button {
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+    flex-grow: 0; /* Не се разтяга допълнително */
+    transition: background 0.3s ease;
+}
+
+.search-form button:hover {
+    background: #1e40af;
+}
+
+/* Респонсив дизайн за мобилни устройства */
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-form input,
+    .search-form select,
+    .search-form button {
+        width: 100%; /* Всички елементи заемат 100% ширина на мобилни */
+    }
+}
+/*===========================*/
+

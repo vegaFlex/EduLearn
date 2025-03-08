@@ -1,6 +1,27 @@
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import AbstractUser, Group, Permission, BaseUserManager
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
+from django.contrib.auth import get_user_model
+
+# User = get_user_model()
+
+
+class UserProfileManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError("Имейлът е задължителен!")
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        return self.create_user(email, password, **extra_fields)
+
 
 class UserProfile(AbstractUser):
     ROLE_CHOICES = (
@@ -8,9 +29,11 @@ class UserProfile(AbstractUser):
         ('student', 'Ученик'),
     )
 
-    email = models.EmailField(unique=True)  # 🔹 Email ще бъде уникален и ще служи за вход
+    email = models.EmailField(unique=True)  # Email ще бъде уникален и ще служи за вход
     username = models.CharField(max_length=150, blank=True, null=True,
-                                unique=True)  # 🔹 username няма да се ползва активно
+                                unique=True)  # username няма да се ползва активно
+
+
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
     bio = models.TextField(blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
@@ -21,10 +44,12 @@ class UserProfile(AbstractUser):
     USERNAME_FIELD = "email"  # Влизам с email вместо username
     REQUIRED_FIELDS = []  # Django очаква допълнителни задължителни полета, но ги премахвам
 
-    def save(self, *args, **kwargs):
-        if not self.username:
-            self.username = self.email  # Ако username е празно, попълвам го с email
-        super().save(*args, **kwargs)
+    objects = UserProfileManager()  # Добавям новия мениджър
+
+    # def save(self, *args, **kwargs):
+    #     if not self.username:
+    #         self.username = self.email  # Ако username е празно, попълвам го с email
+    #     super().save(*args, **kwargs)
 
     def __str__(self):
         return self.email
@@ -42,12 +67,17 @@ class Course(models.Model):
     description = models.TextField()
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
-    creator = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    # creator = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     video_url = models.URLField(blank=True, null=True)  # Позволява линкове към YouTube/Vimeo
     document = models.FileField(upload_to="course_documents/", blank=True, null=True)  # Качване на PDF файлове
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    # rating = models.FloatField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
+    rating = models.FloatField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)], blank=True,
+                               null=True)
 
     def __str__(self):
         return self.title
