@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Изтриване на курс{% endblock %}
+
+{% block content %}
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-4 text-red-600">Сигурни ли сте, че искате да изтриете този курс?</h2>
+        <p class="mb-4"><strong>{{ course.title }}</strong></p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="p-3 mb-4 rounded-lg text-white {% if message.tags == 'success' %} bg-green-500 {% else %} bg-red-500 {% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-800">
+                Изтрий курса
+            </button>
+            <a href="{% url 'courses' %}" class="text-blue-500 ml-4">Отказ</a>
+        </form>
+    </div>
+{% endblock %}

@@ -1,51 +1,3 @@
-{#{% load static %}#}
-{#<!DOCTYPE html>#}
-{#<html lang="bg">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
-{#    <title>{% block title %}EduLearn{% endblock %}</title>#}
-{#    <link href="{% static 'css/output.css' %}" rel="stylesheet">#}
-{##}
-{#</head>#}
-{#<body class="bg-gray-100 text-gray-900">#}
-{#<!-- Навигация -->#}
-{#<nav class="bg-blue-600 text-white p-4">#}
-{#    <div class="container mx-auto flex justify-between items-center">#}
-{#        <a href="{% url 'home' %}" class="text-xl font-bold">EduLearn</a>#}
-{#        <ul class="flex space-x-4">#}
-{#            <li><a href="{% url 'courses' %}" class="hover:underline">Курсове</a></li>#}
-{#            <li><a href="{% url 'admin:index' %}" class="hover:underline">Админ</a></li>#}
-{#        </ul>#}
-{#    </div>#}
-{#</nav>#}
-{##}
-{#<!-- Основно съдържание -->#}
-{#<div class="container mx-auto p-6">#}
-{#    {% block content %}{% endblock %}#}
-{#</div>#}
-{##}
-{#<!-- Футър -->#}
-{#<footer class="bg-blue-600 text-white text-center p-4 mt-10">#}
-{#    <p>&copy; 2025 EduLearn - Всички права запазени.</p>#}
-{#</footer>#}
-{#</body>#}
-{#{% if messages %}#}
-{#    <div class="fixed top-4 right-4 z-50">#}
-{#        {% for message in messages %}#}
-{#            <div class="mb-2 px-4 py-3 rounded-lg text-white shadow-lg#}
-{#                        {% if message.tags == 'success' %} bg-green-500#}
-{#                        {% elif message.tags == 'error' %} bg-red-500#}
-{#                        {% elif message.tags == 'info' %} bg-blue-500#}
-{#                        {% endif %}">#}
-{#                {{ message }}#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#    </div>#}
-{#{% endif %}#}
-{##}
-{#</html>#}
-
 {% load static %}
 
 <!DOCTYPE html>
@@ -72,6 +24,7 @@
         {% endfor %}
     </div>
 {% endif %}
+
 <!-- Навигация -->
 <nav class="bg-blue-600 text-white p-4">
     <div class="container mx-auto flex justify-between items-center">
@@ -81,7 +34,13 @@
             <li><a href="{% url 'admin:index' %}" class="hover:underline">Админ</a></li>
 
             {% if request.user.is_authenticated %}
-                <!-- Показваме името на потребителя и бутон за изход -->
+                {% if request.user.role == "teacher" %}
+                    <li>
+                        <a href="{% url 'create_course' %}" class="bg-green-500 px-3 py-1 rounded hover:bg-green-700">
+                            Добави курс
+                        </a>
+                    </li>
+                {% endif %}
                 <li><span class="font-semibold">{{ request.user.email }}</span></li>
                 <li>
                     <a href="{% url 'profile' %}" class="hover:underline">Профил</a>
@@ -92,7 +51,6 @@
                     </a>
                 </li>
             {% else %}
-                <!-- Показваме бутони за вход и регистрация -->
                 <li>
                     <a href="{% url 'login' %}" class="bg-green-500 px-3 py-2 rounded hover:bg-green-700 transition">
                         Вход
@@ -105,6 +63,8 @@
                     </a>
                 </li>
             {% endif %}
+
+
         </ul>
     </div>
 </nav>

@@ -1,0 +1,57 @@
+{#{% extends "base.html" %}#}
+{#{% block title %}Добавяне на курс{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">#}
+{#    <h2 class="text-2xl font-bold mb-4">Добавяне на курс</h2>#}
+{##}
+{#    {% if messages %}#}
+{#        {% for message in messages %}#}
+{#            <div class="p-3 mb-4 rounded-lg text-white {% if message.tags == 'success' %} bg-green-500 {% else %} bg-red-500 {% endif %}">#}
+{#                {{ message }}#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    {% endif %}#}
+{##}
+{#    <form method="post">#}
+{#        {% csrf_token %}#}
+{#        {{ form.as_p }}#}
+{#        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-800">#}
+{#            Запази курса#}
+{#        </button>#}
+{#    </form>#}
+{#</div>#}
+{#{% endblock %}#}
+
+
+{% extends "base.html" %}
+{% block title %}Добавяне на курс{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold mb-4">Добавяне на курс</h2>
+
+    <!-- Flash съобщения -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="p-3 mb-4 rounded-lg text-white text-center font-semibold
+                        {% if message.tags == 'success' %} bg-green-500
+                        {% else %} bg-red-500 {% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Формуляр за курс -->
+    <form method="post" enctype="multipart/form-data" class="space-y-4">
+        {% csrf_token %}
+        <div class="grid grid-cols-1 gap-4">
+            {{ form.as_p }}
+        </div>
+
+        <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white py-3 px-4 rounded-lg hover:scale-105 transform transition duration-300 font-semibold shadow-md">
+            Запази курса
+        </button>
+    </form>
+</div>
+{% endblock %}

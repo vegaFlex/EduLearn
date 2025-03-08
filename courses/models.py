@@ -1,29 +1,6 @@
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
-
-# class UserProfile(AbstractUser):
-#     ROLE_CHOICES = (
-#         ('teacher', 'Преподавател'),
-#         ('student', 'Ученик'),
-#     )
-#     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
-#     bio = models.TextField(blank=True, null=True)
-#     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
-#
-#     email = models.EmailField(unique=True)  # ЗАДЪЛЖИТЕЛНО unique=True, за да може да бъде USERNAME_FIELD
-#
-#     groups = models.ManyToManyField(Group, related_name="user_profiles", blank=True)
-#     user_permissions = models.ManyToManyField(Permission, related_name="user_profiles_permissions", blank=True)
-#
-#     USERNAME_FIELD = 'email'  # Използвам email вместо username
-#     REQUIRED_FIELDS = ['username']  # Django все още изисква username, но не го ползвам за вход
-#
-#     def __str__(self):
-#         return self.username
-
-from django.contrib.auth.models import AbstractUser, Group, Permission
-from django.db import models
-
+from django.conf import settings
 
 class UserProfile(AbstractUser):
     ROLE_CHOICES = (
@@ -66,6 +43,10 @@ class Course(models.Model):
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     creator = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+    video_url = models.URLField(blank=True, null=True)  # Позволява линкове към YouTube/Vimeo
+    document = models.FileField(upload_to="course_documents/", blank=True, null=True)  # Качване на PDF файлове
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
