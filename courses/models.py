@@ -82,6 +82,8 @@ class Course(models.Model):
     rating = models.FloatField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)], blank=True,
                                null=True)
 
+    image = models.ImageField(upload_to='course_images/', blank=True, null=True)
+
     def __str__(self):
         return self.title
 

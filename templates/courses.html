@@ -1,34 +1,110 @@
+{#{% extends 'base.html' %}#}
+{##}
+{#{% block title %}Курсове - EduLearn{% endblock %}#}
+{##}
+{#{% block content %}#}
+{##}
+{#    <!-- форма за търсене и филтриране -->#}
+{#    <form method="GET" action="{% url 'courses' %}" class="mb-6 flex gap-2 flex-wrap bg-white p-4 rounded-lg shadow">#}
+{#        <!-- Търсачка -->#}
+{#        <input type="text" name="q" placeholder="🔍 Търсене на курсове..."#}
+{#               value="{{ query|default_if_none:'' }}"#}
+{#               class="w-full px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">#}
+{##}
+{#        <!-- Филтър по категория -->#}
+{#        <select name="category" class="px-4 py-2 border border-gray-400 rounded-lg">#}
+{#            <option value="">Всички категории</option>#}
+{#            <option value="programming" {% if category == "programming" %}selected{% endif %}>Програмиране</option>#}
+{#            <option value="design" {% if category == "design" %}selected{% endif %}>Дизайн</option>#}
+{#            <option value="marketing" {% if category == "marketing" %}selected{% endif %}>Маркетинг</option>#}
+{#            <option value="business" {% if category == "business" %}selected{% endif %}>Бизнес</option>#}
+{#        </select>#}
+{##}
+{#        <!-- Филтър по цена -->#}
+{#        <input type="number" name="min_price" placeholder="Мин. цена (лв.)" value="{{ min_price|default_if_none:'' }}"#}
+{#               class="px-4 py-2 border border-gray-400 rounded-lg">#}
+{#        <input type="number" name="max_price" placeholder="Макс. цена (лв.)" value="{{ max_price|default_if_none:'' }}"#}
+{#               class="px-4 py-2 border border-gray-400 rounded-lg">#}
+{##}
+{#        <!-- Бутон за търсене и филтриране -->#}
+{#        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">🔍 Приложи</button>#}
+{#    </form>#}
+{##}
+{#    <!-- Форма за търсене и филтриране -->#}
+{#    <form method="GET" action="{% url 'courses' %}" class="search-form">#}
+{#        <!-- Търсачка -->#}
+{#        <input type="text" name="q" placeholder="🔍 Търсене на курсове..."#}
+{#               value="{{ query|default_if_none:'' }}">#}
+{##}
+{#        <!-- Филтър по категория -->#}
+{#        <select name="category">#}
+{#            <option value="">Всички категории</option>#}
+{#            <option value="programming" {% if category == "programming" %}selected{% endif %}>Програмиране</option>#}
+{#            <option value="design" {% if category == "design" %}selected{% endif %}>Дизайн</option>#}
+{#            <option value="marketing" {% if category == "marketing" %}selected{% endif %}>Маркетинг</option>#}
+{#            <option value="business" {% if category == "business" %}selected{% endif %}>Бизнес</option>#}
+{#        </select>#}
+{##}
+{#        <!-- Филтър по цена -->#}
+{#        <input type="number" name="min_price" placeholder="Мин. цена (лв.)"#}
+{#               value="{{ min_price|default_if_none:'' }}">#}
+{#        <input type="number" name="max_price" placeholder="Макс. цена (лв.)"#}
+{#               value="{{ max_price|default_if_none:'' }}">#}
+{##}
+{#        <!-- Филтър по рейтинг -->#}
+{#        <select name="rating" class="px-4 py-2 border border-gray-400 rounded-lg">#}
+{#            <option value="">Мин. рейтинг</option>#}
+{#            <option value="1" {% if min_rating == "1" %}selected{% endif %}>1 ⭐</option>#}
+{#            <option value="2" {% if min_rating == "2" %}selected{% endif %}>2 ⭐</option>#}
+{#            <option value="3" {% if min_rating == "3" %}selected{% endif %}>3 ⭐</option>#}
+{#            <option value="4" {% if min_rating == "4" %}selected{% endif %}>4 ⭐</option>#}
+{#            <option value="5" {% if min_rating == "5" %}selected{% endif %}>5 ⭐</option>#}
+{#        </select>#}
+{##}
+{#        <!-- Бутон за търсене и филтриране -->#}
+{#        <button type="submit">🔍 Приложи</button>#}
+{#    </form>#}
+{##}
+{#    <h1 class="text-3xl font-bold mb-6">Всички курсове</h1>#}
+{##}
+{#    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">#}
+{#        {% for course in courses %}#}
+{#            <div class="bg-white shadow-xl rounded-lg overflow-hidden transform transition-transform hover:scale-105">#}
+{#                <div class="p-4">#}
+{#                    <h2 class="text-xl font-semibold text-gray-800">{{ course.title }}</h2>#}
+{#                    <p class="text-gray-600 mt-2">{{ course.description|truncatechars:100 }}</p>#}
+{#                    <p class="mt-4 text-blue-600 font-bold">{{ course.price }} лв.</p>#}
+{#                    <a href="{% url 'course_detail' course.id %}"#}
+{#                       class="block mt-4 bg-blue-600 text-white py-2 px-4 text-center rounded-lg hover:bg-blue-700">#}
+{#                        Виж повече#}
+{#                    </a>#}
+{##}
+{#                    <!-- Проверяваме дали текущият потребител е създателят на курса -->#}
+{#                    {% if request.user == course.creator %}#}
+{#                        <div class="mt-2 flex space-x-2">#}
+{#                            <a href="{% url 'edit_course' course.id %}"#}
+{#                               class="bg-yellow-500 px-3 py-2 rounded text-white hover:bg-yellow-700">#}
+{#                                ✏️ Редактирай#}
+{#                            </a>#}
+{#                            <a href="{% url 'delete_course' course.id %}"#}
+{#                               class="bg-red-500 px-3 py-2 rounded text-white hover:bg-red-700">#}
+{#                                🗑 Изтрий#}
+{#                            </a>#}
+{#                        </div>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#            </div>#}
+{#        {% empty %}#}
+{#            <p class="text-gray-500">Няма налични курсове.</p>#}
+{#        {% endfor %}#}
+{#    </div>#}
+{#{% endblock %}#}
+
 {% extends 'base.html' %}
 
 {% block title %}Курсове - EduLearn{% endblock %}
 
 {% block content %}
-
-    {#    <!-- форма за търсене и филтриране -->#}
-    {#    <form method="GET" action="{% url 'courses' %}" class="mb-6 flex gap-2 flex-wrap bg-white p-4 rounded-lg shadow">#}
-    {#        <!-- Търсачка -->#}
-    {#        <input type="text" name="q" placeholder="🔍 Търсене на курсове..."#}
-    {#               value="{{ query|default_if_none:'' }}"#}
-    {#               class="w-full px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">#}
-    {##}
-    {#        <!-- Филтър по категория -->#}
-    {#        <select name="category" class="px-4 py-2 border border-gray-400 rounded-lg">#}
-    {#            <option value="">Всички категории</option>#}
-    {#            <option value="programming" {% if category == "programming" %}selected{% endif %}>Програмиране</option>#}
-    {#            <option value="design" {% if category == "design" %}selected{% endif %}>Дизайн</option>#}
-    {#            <option value="marketing" {% if category == "marketing" %}selected{% endif %}>Маркетинг</option>#}
-    {#            <option value="business" {% if category == "business" %}selected{% endif %}>Бизнес</option>#}
-    {#        </select>#}
-    {##}
-    {#        <!-- Филтър по цена -->#}
-    {#        <input type="number" name="min_price" placeholder="Мин. цена (лв.)" value="{{ min_price|default_if_none:'' }}"#}
-    {#               class="px-4 py-2 border border-gray-400 rounded-lg">#}
-    {#        <input type="number" name="max_price" placeholder="Макс. цена (лв.)" value="{{ max_price|default_if_none:'' }}"#}
-    {#               class="px-4 py-2 border border-gray-400 rounded-lg">#}
-    {##}
-    {#        <!-- Бутон за търсене и филтриране -->#}
-    {#        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">🔍 Приложи</button>#}
-    {#    </form>#}
 
     <!-- Форма за търсене и филтриране -->
     <form method="GET" action="{% url 'courses' %}" class="search-form">
@@ -52,7 +128,7 @@
                value="{{ max_price|default_if_none:'' }}">
 
         <!-- Филтър по рейтинг -->
-        <select name="rating" class="px-4 py-2 border border-gray-400 rounded-lg">
+        <select name="rating">
             <option value="">Мин. рейтинг</option>
             <option value="1" {% if min_rating == "1" %}selected{% endif %}>1 ⭐</option>
             <option value="2" {% if min_rating == "2" %}selected{% endif %}>2 ⭐</option>
@@ -65,11 +141,16 @@
         <button type="submit">🔍 Приложи</button>
     </form>
 
-    <h1 class="text-3xl font-bold mb-6">Всички курсове</h1>
+    <h1 class=" course-title text-3xl font-bold mb-6">Всички курсове</h1>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {% for course in courses %}
             <div class="bg-white shadow-xl rounded-lg overflow-hidden transform transition-transform hover:scale-105">
+                {% if course.image %}
+                    <div class="course-image-container">
+                        <img src="{{ course.image.url }}" alt="{{ course.title }}" class="course-image">
+                    </div>
+                {% endif %}
                 <div class="p-4">
                     <h2 class="text-xl font-semibold text-gray-800">{{ course.title }}</h2>
                     <p class="text-gray-600 mt-2">{{ course.description|truncatechars:100 }}</p>
