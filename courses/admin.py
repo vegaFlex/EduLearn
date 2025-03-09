@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile, Course, Lesson, Quiz, Question, Review, Order
+from .models import UserProfile, Course, Lesson, Quiz, Question, Review, Order, QuizResult, CompletedLesson
 
 
 @admin.register(UserProfile)
@@ -22,7 +22,7 @@ class LessonAdmin(admin.ModelAdmin):
     list_display = ("title", "course", "created_at")
     search_fields = ("title", "course__title")
 
-
+# -------------------------------------------------
 @admin.register(Quiz)
 class QuizAdmin(admin.ModelAdmin):
     list_display = ("title", "course", "created_at")
@@ -34,6 +34,19 @@ class QuestionAdmin(admin.ModelAdmin):
     list_display = ("question_text", "quiz")
     search_fields = ("question_text", "quiz__title")
 
+@admin.register(QuizResult)
+class QuizResultAdmin(admin.ModelAdmin):
+    list_display = ("user", "quiz", "score", "completed_at")
+    search_fields = ("user__email", "quiz__title")
+    list_filter = ("score", "completed_at")
+
+@admin.register(CompletedLesson)
+class CompletedLessonAdmin(admin.ModelAdmin):
+    list_display = ("user", "lesson", "completed_at")
+    search_fields = ("user__email", "lesson__title")
+    list_filter = ("completed_at",)
+
+# ------------------------------
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):

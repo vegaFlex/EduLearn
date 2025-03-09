@@ -11,6 +11,7 @@ import stripe
 from .models import Course, Order
 from django.urls import reverse
 from django.conf import settings
+from .models import Quiz, Question, QuizResult, CompletedLesson, Lesson
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -143,8 +144,11 @@ def create_course(request):
 
 def course_detail(request, course_id):
     course = get_object_or_404(Course, id=course_id)
+    lessons = course.lessons.all()  # Взимаме всички уроци за този курс
+
     return render(request, "course_detail.html", {
         "course": course,
+        "lessons": lessons,
         "STRIPE_PUBLISHABLE_KEY": settings.STRIPE_PUBLISHABLE_KEY
     })
 
@@ -210,7 +214,7 @@ def create_checkout_session(request, course_id):
         cancel_url=request.build_absolute_uri(reverse("payment_cancel")),
     )
 
-    # Създавам поръчка в базата данни
+    # създавам поръчка в базата данни
     order = Order.objects.create(
         user=request.user,
         course=course,
@@ -227,7 +231,7 @@ def payment_success(request):
     if not session_id:
         return redirect("courses")
 
-    # Проверка дали поръчката съществува
+    # проверка дали поръчката съществува
     order = get_object_or_404(Order, stripe_payment_id=session_id)
     order.is_paid = True
     order.save()
@@ -249,5 +253,36 @@ def payment_cancel(request):
 
 @login_required
 def my_courses(request):
-    courses = request.user.enrolled_courses.all()  # 🔹 Всички курсове, в които е записан потребителят
+    courses = request.user.enrolled_courses.all()  # всички курсове, в които е записан потребителят
     return render(request, "my_courses.html", {"courses": courses})
+
+
+
+@login_required
+def quiz_detail(request, quiz_id):
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    questions = quiz.questions.all()
+
+    if request.method == "POST":
+        score = 0
+        total_questions = questions.count()
+
+        for question in questions:
+            selected_answer = request.POST.get(f"question_{question.id}")
+            if selected_answer and selected_answer == question.correct_answer:
+                score += 1
+
+        final_score = int((score / total_questions) * 100)
+        QuizResult.objects.create(user=request.user, quiz=quiz, score=final_score)
+
+        messages.success(request, f"Тестът е завършен! Вашият резултат: {final_score}%")
+        return redirect("my_courses")
+
+    return render(request, "quiz_detail.html", {"quiz": quiz, "questions": questions})
+
+@login_required
+def mark_lesson_completed(request, lesson_id):
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+    CompletedLesson.objects.get_or_create(user=request.user, lesson=lesson)
+    messages.success(request, "Урокът е маркиран като завършен! ✅")
+    return redirect("my_courses")

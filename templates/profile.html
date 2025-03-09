@@ -1,3 +1,24 @@
+{#{% extends "base.html" %}#}
+{#{% block title %}Профил{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#    <h2 class="text-2xl font-bold mb-4">Здравей, {{ user.email }}!</h2>#}
+{#    <p>Роля: {{ user.get_role_display }}</p>#}
+{##}
+{#    {% if user.role == "teacher" %}#}
+{#        <p>Вие сте преподавател. Можете да създавате курсове.</p>#}
+{#        <a href="#" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">#}
+{#            Добави курс#}
+{#        </a>#}
+{#    {% else %}#}
+{#        <p>Вие сте ученик. Можете да записвате курсове.</p>#}
+{#    {% endif %}#}
+{##}
+{#    <a href="{% url 'logout' %}" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">#}
+{#        Изход#}
+{#    </a>#}
+{#{% endblock %}#}
+
 {% extends "base.html" %}
 {% block title %}Профил{% endblock %}
 
@@ -7,14 +28,23 @@
 
     {% if user.role == "teacher" %}
         <p>Вие сте преподавател. Можете да създавате курсове.</p>
-        <a href="#" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
+        <a href="{% url 'create_course' %}" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
             Добави курс
         </a>
     {% else %}
         <p>Вие сте ученик. Можете да записвате курсове.</p>
     {% endif %}
 
-    <a href="{% url 'logout' %}" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">
+    <h3 class="text-xl font-bold mt-4">📌 Завършени уроци</h3>
+    <ul class="list-disc pl-6">
+        {% for completed in request.user.completedlesson_set.all %}
+            <li class="text-green-600">{{ completed.lesson.title }}</li>
+        {% empty %}
+            <p class="text-gray-500">Все още няма завършени уроци.</p>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'logout' %}" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 mt-4 inline-block">
         Изход
     </a>
 {% endblock %}
