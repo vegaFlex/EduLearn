@@ -53,6 +53,7 @@
         width: 100%; /* Всички елементи заемат 100% ширина на мобилни */
     }
 }
+
 /*===========================*/
 
 /* Основни стилове за дропдаун менюто */
@@ -98,7 +99,8 @@
 .user-dropdown-btn.active .dropdown-arrow {
     transform: rotate(180deg);
 }
- /*=========================================*/
+
+/*=========================================*/
 
 /*=================================================*/
 /*CSS  ЗА templates/course_detail.html*/
@@ -174,6 +176,8 @@
     text-align: center;
 }
 
+
+
 /*!* Цена *!*/
 /*.course-price {*/
 /*    font-size: 1.6rem;*/
@@ -182,21 +186,47 @@
 /*    margin-bottom: 10px;*/
 /*}*/
 
+/* Цена с разделителна линия */
 .course-price {
     font-size: 1.6rem;
     font-weight: bold;
-    color: #d35400; /* По-забележим цвят за цена */
+    /*color: #d35400; !* По-забележим цвят за цена *!*/
+    color: #1e3a8a; /* Тъмносин */
+    /*background: #e0e7ff; !* Светлосин фон *!*/
     margin-bottom: 10px;
-    padding-top: 10px; /* Добавя място над цената за линията */
-    border-top: 2px solid #ddd; /* Разделителна черта над цената */
+    padding-top: 15px; /* Разстояние след линията */
+    text-align: center;
+    position: relative;
 }
+
+/* Разделителна линия над цената */
+.course-price::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #ddd; /* Светло сива линия */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+/*.course-price {*/
+/*    font-size: 1.6rem;*/
+/*    font-weight: bold;*/
+/*    color: #d35400; !* По-забележим цвят за цена *!*/
+/*    margin-bottom: 10px;*/
+/*    padding-top: 10px; !* Добавя място над цената за линията *!*/
+/*    border-top: 2px solid #ddd; !* Разделителна черта над цената *!*/
+/*}*/
 
 /* Унифицирани бутони с различни цветове */
 .course-button {
     display: block;
     width: 100%;
     padding: 12px;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     font-weight: bold;
     color: white;
     border-radius: 5px;
@@ -225,17 +255,32 @@
     background: #1e7e34;
 }
 
-/* Бутон "Плати с карта" (оранжев) */
+/*!* Бутон "Плати с карта" (оранжев) *!*/
+/*.payment-button {*/
+/*    background: #ff6600; !* Оранжев *!*/
+/*    font-size: 1rem;*/
+/*    font-weight: bold;*/
+/*    padding: 12px;*/
+/*}*/
+
+/*.payment-button:hover {*/
+/*    background: #cc5200;*/
+/*}*/
+
 .payment-button {
-    background: #ff6600; /* Оранжев */
+    background: #1e3a8a; /* Тъмносин */
     font-size: 1.3rem;
     font-weight: bold;
     padding: 12px;
+    color: white;
+    border-radius: 6px;
+    transition: background 0.3s ease-in-out;
 }
 
 .payment-button:hover {
-    background: #cc5200;
+    background: green; /* Още по-тъмен нюанс при ховър */
 }
+
 
 
 /* Hover ефекти */
@@ -310,8 +355,435 @@
 }
 
 /*====================================*/
+/*css за ревютата за всеки курс*/
+.course-reviews {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
 
+.reviews-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
 
+.review-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.review-user {
+    font-weight: bold;
+}
+
+.review-rating {
+    color: #facc15; /* Жълт цвят за звездите */
+    font-size: 1.2rem;
+}
+
+.review-comment {
+    font-size: 1rem;
+    color: #4b5563;
+}
+
+.review-date {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.add-review-button {
+    display: block;
+    text-align: center;
+    background: #2563eb;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.add-review-button:hover {
+    background: #1e40af;
+}
+
+.login-message {
+    color: #6b7280;
+    font-size: 1rem;
+    margin-top: 10px;
+}
 
 
 /*============================================*/
+/*css за всички съобщения */
+.custom-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #d4edda; /* Светло зелен фон */
+    color: #155724; /* Тъмно зелен текст */
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+    z-index: 1000;
+}
+
+.hide-message {
+    opacity: 0;
+}
+
+/*======================================*/
+.review-container {
+    background-color: #f8fafc; /* Много светъл син (почти бял) */
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-left: 4px solid #2563eb; /* Синя лента вместо жълта */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.review-user {
+    font-weight: bold;
+    color: #1e3a8a; /* Тъмен син */
+}
+
+.review-rating {
+    color: #ffd700; /* Жълти звезди за контраст */
+    font-weight: bold;
+}
+
+.review-comment {
+    font-size: 16px;
+    color: #374151; /* Тъмен, но не черен текст */
+}
+
+
+/*.review-container {*/
+/*    background-color: #f8f9fa; !* Светъл фон *!*/
+/*    padding: 15px;*/
+/*    border-radius: 8px;*/
+/*    margin-bottom: 10px;*/
+/*    border-left: 5px solid #ffcc00; !* Жълта лента за акцент *!*/
+/*    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
+/*}*/
+
+/*.review-user {*/
+/*    font-weight: bold;*/
+/*    color: #333;*/
+/*}*/
+
+/*.review-rating {*/
+/*    color: #ffcc00;*/
+/*    font-weight: bold;*/
+/*}*/
+
+/*.review-comment {*/
+/*    font-size: 16px;*/
+/*    color: #444;*/
+/*    margin-top: 5px;*/
+/*}*/
+
+.review-date {
+    font-size: 14px;
+    color: #777;
+    margin-top: 5px;
+}
+
+.add-review-button {
+    display: block;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    margin-top: 15px;
+}
+
+.add-review-button:hover {
+    background-color: #0056b3;
+}
+/*============================================*/
+
+/*!* Унифицирани бутони с различни нюанси *!*/
+/*.course-button {*/
+/*    display: block;*/
+/*    width: 100%;*/
+/*    padding: 12px;*/
+/*    font-size: 1.2rem;*/
+/*    font-weight: bold;*/
+/*    color: white;*/
+/*    border-radius: 5px;*/
+/*    text-align: center;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*    transition: 0.3s;*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
+/*!* Гледай видеото – Запазваме синия, но по-мек *!*/
+/*.video-button {*/
+/*    background: #2b6cb0; !* По-мек нюанс на синьото *!*/
+/*}*/
+
+/*.video-button:hover {*/
+/*    background: #1e4e8c;*/
+/*}*/
+
+/*!* Изтегли документа – запазваме сивия, но по-топъл *!*/
+/*.document-button {*/
+/*    background: #5a6268; !* По-меко сиво *!*/
+/*}*/
+
+/*.document-button:hover {*/
+/*    background: #434a4f;*/
+/*}*/
+
+/*!* Тестове – светло зелен, но по-мек *!*/
+/*.quiz-toggle {*/
+/*    background: #4caf50; !* Мек зелен *!*/
+/*}*/
+
+/*.quiz-toggle:hover {*/
+/*    background: #3b8c3a;*/
+/*}*/
+
+/*!* Плати с карта – оранжев, но по-тъмен за контраст *!*/
+/*.payment-button {*/
+/*    background: #e67e22; !* Топъл оранжев *!*/
+/*}*/
+
+/*.payment-button:hover {*/
+/*    background: #cf6a14;*/
+/*}*/
+
+/*.course-price {*/
+/*    font-size: 1.6rem;*/
+/*    font-weight: bold;*/
+/*    color: #b36b00; !* Златист цвят вместо силен оранжев *!*/
+/*    background: #fff3cd; !* Леко жълт фон *!*/
+/*    padding: 10px;*/
+/*    border-radius: 6px;*/
+/*    border: 1px solid #e0b000; !* Лека рамка *!*/
+/*    display: inline-block; !* За по-добро позициониране *!*/
+/*    margin-bottom: 15px;*/
+/*}*/
+
+
+
+/*.review-container {*/
+/*    background-color: #f9fafb; !* Светъл фон *!*/
+/*    padding: 15px;*/
+/*    border-radius: 8px;*/
+/*    margin-bottom: 10px;*/
+/*    border-left: 4px solid #d4af37; !* Златисто вместо силно жълто *!*/
+/*    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);*/
+/*}*/
+
+/*.review-user {*/
+/*    font-weight: bold;*/
+/*    color: #444;*/
+/*}*/
+
+/*.review-rating {*/
+/*    color: #facc15;*/
+/*    font-weight: bold;*/
+/*}*/
+
+/*===================================!*!*-----------------------------*! ===================================*!*/
+/* Унифицирани бутони с леки разлики в нюансите */
+/*.course-button {*/
+/*    display: block;*/
+/*    width: 100%;*/
+/*    padding: 12px;*/
+/*    font-size: 1.2rem;*/
+/*    font-weight: bold;*/
+/*    color: white;*/
+/*    border-radius: 5px;*/
+/*    text-align: center;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*    transition: 0.3s;*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
+/*!* Гледай видеото - Основен цвят на сайта *!*/
+/*.video-button {*/
+/*    background: #2563eb; !* Основен син *!*/
+/*}*/
+
+/*.video-button:hover {*/
+/*    background: #1e40af;*/
+/*}*/
+
+/*!* Изтегли документа - По-светъл син *!*/
+/*.document-button {*/
+/*    background: #1e40af; !* По-тъмен син, близък до основния *!*/
+/*}*/
+
+/*.document-button:hover {*/
+/*    background: #163374;*/
+/*}*/
+
+/*!* Тестове - по-тъмен син *!*/
+/*.quiz-toggle {*/
+/*    background: #1e3a8a; !* Тъмен син *!*/
+/*}*/
+
+/*.quiz-toggle:hover {*/
+/*    background: #162c66; !* Още по-тъмен син при ховър *!*/
+/*}*/
+
+/*!*!* Плати с карта - Вместо оранжево -> Наситено синьо *!*!*/
+/*!*.payment-button {*!*/
+/*!*    color: white;*!*/
+/*!*    background: #154ec1; !* Дълбоко синьо *!*!*/
+/*!*}*!*/
+
+/*!*.payment-button:hover {*!*/
+/*!*    background: #103c98;*!*/
+/*!*}*!*/
+
+/*!* Плати с карта *!*/
+/*.payment-button {*/
+/*    color: white;*/
+/*    background: lightseagreen; !* Дълбоко синьо *!*/
+/*}*/
+
+/*.payment-button:hover {*/
+/*    background: lawngreen;*/
+/*}*/
+
+/*!* Цена - остава оранжева *!*/
+/*.course-price {*/
+/*    font-size: 1.6rem;*/
+/*    font-weight: bold;*/
+/*    color: #b36b00; !* Златисто-оранжев *!*/
+/*    background: #fff3cd; !* Леко жълт фон *!*/
+/*    padding: 10px;*/
+/*    border-radius: 6px;*/
+/*    border: 1px solid #e0b000; !* Лека рамка *!*/
+/*    display: inline-block;*/
+/*    margin-bottom: 15px;*/
+/*}*/
+/*=====================================================*/
+
+/*!* Унифицирани бутони с леки разлики в нюансите *!*/
+/*.course-button {*/
+/*    display: block;*/
+/*    width: 100%;*/
+/*    padding: 12px;*/
+/*    font-size: 1.2rem;*/
+/*    font-weight: bold;*/
+/*    color: white;*/
+/*    border-radius: 5px;*/
+/*    text-align: center;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*    transition: 0.3s;*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
+/*!* Гледай видеото - Основен цвят на сайта *!*/
+/*.video-button {*/
+/*    background: #2563eb; !* Основен син *!*/
+/*}*/
+
+/*.video-button:hover {*/
+/*    background: #1e40af;*/
+/*}*/
+
+/*!* Изтегли документа - По-светъл син *!*/
+/*.document-button {*/
+/*    background: #2563eb; !* Основен син *!*/
+/*}*/
+
+/*.document-button:hover {*/
+/*    background: #1e40af;*/
+/*}*/
+
+/*!* Тестове - по-тъмен син *!*/
+/*.quiz-toggle {*/
+/*    background: #2563eb; !* Основен син *!*/
+/*}*/
+
+/*.quiz-toggle:hover {*/
+/*    background: #1e40af;*/
+/*}*/
+
+
+/*!* Плати с карта *!*/
+/*.payment-button {*/
+/*    color: white;*/
+/*    background: dodgerblue;*/
+/*}*/
+
+/*.payment-button:hover {*/
+/*    background: cornflowerblue;*/
+/*}*/
+
+/*!*!* Цена - остава оранжева *!*!*/
+/*!*.course-price {*!*/
+/*!*    font-size: 1.6rem;*!*/
+/*!*    font-weight: bold;*!*/
+/*!*    !*color: #b36b00; !* Златисто-оранжев *!*!*!*/
+/*!*    color: white; !* Златисто-оранжев *!*!*/
+/*!*    background: dodgerblue; !* Леко жълт фон *!*!*/
+/*!*    padding: 10px;*!*/
+/*!*    border-radius: 6px;*!*/
+/*!*    border: 1px solid #e0b000; !* Лека рамка *!*!*/
+/*!*    display: inline-block;*!*/
+/*!*    margin-bottom: 15px;*!*/
+/*!*}*!*/
+/*!*--------*!*/
+/*!* Контейнер за разделителна линия и цената *!*/
+/*.course-price-container {*/
+/*    width: 100%;*/
+/*    text-align: center;*/
+/*    margin-top: 20px; !* Разстояние отгоре *!*/
+/*    padding-top: 10px;*/
+/*    position: relative;*/
+/*}*/
+
+/*!* Разделителна линия над цената *!*/
+/*.course-price-container::before {*/
+/*    content: "";*/
+/*    display: block;*/
+/*    width: 100%;*/
+/*    height: 3px;*/
+/*    background: #ccc; !* Сива линия *!*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*}*/
+
+/*!* Цена - запазваме съществуващия стил *!*/
+/*.course-price {*/
+/*    font-size: 1.6rem;*/
+/*    font-weight: bold;*/
+/*    color: white;*/
+/*    background: dodgerblue;*/
+/*    padding: 10px;*/
+/*    border-radius: 6px;*/
+/*    border: 1px solid #e0b000;*/
+/*    display: inline-block;*/
+/*    margin-bottom: 15px;*/
+/*    width: auto;*/
+/*}*/
+
+/*==============================================*/
+/* Разделителна лента над ревютата */
+.review-section {
+    border-top: 4px solid #2563eb; /* Синя лента */
+    padding-top: 15px; /* Разстояние след лентата */
+    margin-top: 30px; /* Разстояние от другите елементи */
+}

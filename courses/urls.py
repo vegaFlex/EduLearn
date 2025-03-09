@@ -1,8 +1,7 @@
 from django.urls import path
 from .views import courses_list, register, login_view, logout_view, profile, payment_success, payment_cancel
 from .views import create_checkout_session, create_course, course_detail, edit_course, delete_course, my_courses
-from .views import quiz_detail, mark_lesson_completed
-
+from .views import quiz_detail, mark_lesson_completed, add_review
 
 urlpatterns = [
     path("courses/", courses_list, name="courses"),
@@ -20,5 +19,8 @@ urlpatterns = [
     path("my-courses/", my_courses, name="my_courses"),
     path("quiz/<int:quiz_id>/", quiz_detail, name="quiz_detail"),
     path("lesson/<int:lesson_id>/complete/", mark_lesson_completed, name="mark_lesson_completed"),
+
+    path("courses/<int:course_id>/review/", add_review, name="add_review"),  # Първо специфичният URL
+    path("courses/<int:course_id>/", course_detail, name="course_detail"),  # После общият URL
 
 ]

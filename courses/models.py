@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser, Group, Permission, BaseUser
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
+from django.db.models import Avg
 from django.contrib.auth import get_user_model
 
 # User = get_user_model()
@@ -84,8 +85,13 @@ class Course(models.Model):
 
     image = models.ImageField(upload_to='course_images/', blank=True, null=True)
 
+    def average_rating(self):
+        avg_rating = self.reviews.filter(is_approved=True).aggregate(Avg('rating'))['rating__avg']
+        return round(avg_rating, 1) if avg_rating else 0  # Закръгляне до 1 десетична цифра
+
     def __str__(self):
         return self.title
+
 
 class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
@@ -143,6 +149,8 @@ class Review(models.Model):
     rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.user.username} - {self.course.title} ({self.rating})"

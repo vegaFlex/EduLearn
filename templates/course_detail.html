@@ -1,151 +1,3 @@
-{#{% extends "base.html" %}#}
-{#{% block title %}{{ course.title }}{% endblock %}#}
-{##}
-{#{% block content %}#}
-{##}
-{#        <!-- Тества дали Stripe ключът се зарежда -->#}
-{#        <p>Stripe ключ: <span id="stripe-key">{% if STRIPE_PUBLISHABLE_KEY %}{{ STRIPE_PUBLISHABLE_KEY }}{% else %}Няма ключ{% endif %}</span></p>#}
-{##}
-{##}
-{#        <!-- Stripe плащане -->#}
-{#        <form id="payment-form" class="mt-6">#}
-{#            <button id="checkout-button"#}
-{#                    class="bg-green-500 px-4 py-2 text-white rounded-lg hover:bg-green-700"#}
-{#                    data-stripe-key="{{ STRIPE_PUBLISHABLE_KEY }}">#}
-{#                Плати с карта#}
-{#            </button>#}
-{#        </form>#}
-{#    </div>#}
-{##}
-{#    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">#}
-{#        <!-- Заглавие на курса -->#}
-{#        <h2 class="text-3xl font-extrabold text-gray-900 mb-4 text-center">{{ course.title }}</h2>#}
-{##}
-{#        <!-- Описание на курса -->#}
-{#        <p class="text-gray-700 text-lg leading-relaxed mb-6">{{ course.description }}</p>#}
-{##}
-{#        <!-- Информация за курса -->#}
-{#        <div class="bg-gray-100 p-4 rounded-lg mb-6">#}
-{#            <p class="text-lg font-semibold">💰 Цена: <span class="text-green-600">{{ course.price }} лв.</span></p>#}
-{#            {% if course.video_url %}#}
-{#                <p class="mt-2">#}
-{#                    🎥 <a href="{{ course.video_url }}" class="text-blue-600 font-semibold hover:underline">#}
-{#                    Гледай видеото#}
-{#                </a>#}
-{#                </p>#}
-{#            {% endif %}#}
-{#            {% if course.document %}#}
-{#                <p class="mt-2">#}
-{#                    📄 <a href="{{ course.document.url }}" class="text-blue-600 font-semibold hover:underline">#}
-{#                    Изтегли документа#}
-{#                </a>#}
-{#                </p>#}
-{#            {% endif %}#}
-{#        </div>#}
-{##}
-{#        <!-- Маркиране на урок като завършен -->#}
-{#        {% if request.user.is_authenticated %}#}
-{#            <div class="text-center">#}
-{#                {% for lesson in lessons %}#}
-{#                    <div class="bg-gray-100 p-4 rounded-lg mt-4">#}
-{#                        <h4 class="font-bold text-lg">{{ lesson.title }}</h4>#}
-{#                        <p class="text-gray-700">{{ lesson.content }}</p>#}
-{##}
-{#                        {% if lesson not in request.user.completedlesson_set.all %}#}
-{#                            <form action="{% url 'mark_lesson_completed' lesson.id %}" method="POST">#}
-{#                                {% csrf_token %}#}
-{#                                <button type="submit"#}
-{#                                        class="bg-green-500 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-700 transition">#}
-{#                                    ✅ Маркирай като завършен#}
-{#                                </button>#}
-{#                            </form>#}
-{#                        {% else %}#}
-{#                            <p class="text-green-600 font-bold mt-2">✅ Завършен урок</p>#}
-{#                        {% endif %}#}
-{#                    </div>#}
-{#                {% endfor %}#}
-{#            </div>#}
-{#        {% endif %}#}
-{##}
-{##}
-{#        <!-- Тестове за курса -->#}
-{#        <div class="mt-6">#}
-{#            {% if course.quizzes.all %}#}
-{#                <h3 class="text-2xl font-bold text-gray-900 mb-2">📝 Тестове</h3>#}
-{#                <ul class="list-disc pl-6">#}
-{#                    {% for quiz in course.quizzes.all %}#}
-{#                        <li class="mb-2">#}
-{#                            <a href="{% url 'quiz_detail' quiz.id %}"#}
-{#                               class="text-blue-600 font-semibold hover:underline">#}
-{#                                {{ quiz.title }}#}
-{#                            </a>#}
-{#                        </li>#}
-{#                    {% endfor %}#}
-{#                </ul>#}
-{#            {% else %}#}
-{#                <p class="text-gray-500 text-lg">❌ Няма налични тестове за този курс.</p>#}
-{#            {% endif %}#}
-{#        </div>#}
-{##}
-{#        <!-- Stripe плащане -->#}
-{#        <div class="text-center mt-6">#}
-{#            <form id="payment-form">#}
-{#                <button id="checkout-button"#}
-{#                        class="bg-green-500 text-red-50 font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transition"#}
-{#                        data-stripe-key="{{ STRIPE_PUBLISHABLE_KEY }}">#}
-{#                    💳 Плати с карта#}
-{#                </button>#}
-{#            </form>#}
-{#        </div>#}
-{#    </div>#}
-{##}
-{##}
-{#    <!-- Зареждане на Stripe.js -->#}
-{#    <script src="https://js.stripe.com/v3/"></script>#}
-{##}
-{#    <script>#}
-{#        document.addEventListener("DOMContentLoaded", function () {#}
-{#            console.log("Stripe.js е зареден!");#}
-{##}
-{#            // Взимам Stripe ключа от HTML#}
-{#const stripePublicKey = document.getElementById("stripe-key").innerText.trim();#}
-{#            const stripePublicKey = document.getElementById("checkout-button").dataset.stripeKey;#}
-{#            console.log("Stripe ключ:", stripePublicKey);#}
-{##}
-{#            if (!stripePublicKey || stripePublicKey === "fallback-publishable-key") {#}
-{#                console.error("Грешка: Stripe ключът не е коректен!");#}
-{#                alert("Грешка: Stripe ключът не е зададен правилно. Свържи се с администратора.");#}
-{#                return;#}
-{#            }#}
-{##}
-{#            const stripe = Stripe(stripePublicKey);#}
-{##}
-{#            document.getElementById("checkout-button").addEventListener("click", function (e) {#}
-{#                e.preventDefault();#}
-{#                console.log("Бутонът за плащане е натиснат!");#}
-{##}
-{#                fetch("{% url 'create_checkout_session' course.id %}", {#}
-{#                    method: "POST",#}
-{#                    headers: {#}
-{#                        "X-CSRFToken": "{{ csrf_token }}",#}
-{#                    },#}
-{#                })#}
-{#                    .then(response => response.json())#}
-{#                    .then(session => {#}
-{#                        console.log("Stripe сесия създадена:", session);#}
-{#                        return stripe.redirectToCheckout({sessionId: session.sessionId});#}
-{#                    })#}
-{#                    .catch(error => {#}
-{#                        console.error("Грешка при плащане:", error);#}
-{#                        alert("Грешка при свързване със Stripe. Опитай отново.");#}
-{#                    });#}
-{#            });#}
-{#        });#}
-{#    </script>#}
-{#{% endblock %}#}
-{##}
-{##}
-
 {#================================================================#}
 
 {% extends "base.html" %}
@@ -153,7 +5,7 @@
 {% block title %}{{ course.title }}{% endblock %}
 
 {% block content %}
-{#   !!!! Този код в div отдолу закоментираният , обръща мястото на ТЕКСА (текста утива в дясно) и БУТОНИТЕ(В ляво)  !!!#}
+    {#   !!!! Този код в div отдолу закоментираният , обръща мястото на ТЕКСА (текста утива в дясно) и БУТОНИТЕ(В ляво)  !!!#}
     {#    <div class="course-container">#}
     {##}
     {#        <!-- Заглавие -->#}
@@ -215,6 +67,8 @@
     {#            </div>#}
     {#        </div>#}
     {#    </div>#}
+    {#---------------------------------------------#}
+
 
     <div class="course-container">
 
@@ -222,6 +76,11 @@
         <div class="course-title-container">
             <h2 class="course-title">{{ course.title }}</h2>
         </div>
+
+        <div class="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-lg text-lg font-semibold inline-block">
+            ⭐ Среден рейтинг: {{ course.average_rating }} / 5
+        </div>
+
 
         <!-- Основен контейнер с две колони -->
         <div class="course-content">
@@ -266,6 +125,11 @@
 
                 <p class="course-price">💰 Цена: <span class="highlighted-price">{{ course.price }} лв.</span></p>
 
+                {#                <div class="course-price-container">#}
+                {#                    <p class="course-price">💰 Цена: <span class="highlighted-price">{{ course.price }} лв.</span></p>#}
+                {#                </div>#}
+
+
                 <!-- Бутон за плащане -->
                 <form id="payment-form" class="payment-form">
                     <button id="checkout-button" class="payment-button">
@@ -274,7 +138,63 @@
                 </form>
             </div>
         </div>
+
+        {#        <!--Добавяне на секцията за ревюта ПОД съдържанието -->#}
+        {#        <div class="course-reviews">#}
+        {#            <h3 class="reviews-title">⭐ Ревюта</h3>#}
+        {##}
+        {#            {% for review in course.reviews.all|dictsortreversed:"created_at" %}#}
+        {#                {% if review.is_approved %}#}
+        {#                    <div class="border-b py-2">#}
+        {#                        <p class="font-semibold">{{ review.user.email }} - <span#}
+        {#                                class="text-yellow-500">★ {{ review.rating }}</span></p>#}
+        {#                        <p class="text-gray-700">{{ review.comment }}</p>#}
+        {#                        <p class="text-sm text-gray-500">{{ review.created_at|date:"d M Y" }}</p>#}
+        {#                    </div>#}
+        {#                {% endif %}#}
+        {#            {% empty %}#}
+        {#                <p class="text-gray-500">Все още няма ревюта за този курс.</p>#}
+        {#            {% endfor %}#}
+        {##}
+        {##}
+        {#            {% if request.user.is_authenticated %}#}
+        {#                <a href="{% url 'add_review' course.id %}" class="add-review-button">#}
+        {#                    ➕ Добави ревю#}
+        {#                </a>#}
+        {#            {% else %}#}
+        {#                <p class="login-message">Трябва да сте влезли, за да оставите ревю.</p>#}
+        {#            {% endif %}#}
+        {#        </div>#}
+
+        <!--  Добавяне на секцията за ревюта ПОД съдържанието  -->
+        <div class="course-reviews review-section bg-gray-100 p-4 rounded-lg mt-6">
+            <h3 class="text-xl font-bold mb-4">⭐ Ревюта</h3>
+
+            {% for review in course.reviews.all|dictsortreversed:"created_at" %}
+                {% if review.is_approved %}
+                    <div class="review-container">
+                        <p class="review-user">{{ review.user.email }} - <span
+                                class="review-rating">★ {{ review.rating }}</span></p>
+                        <p class="review-comment">{{ review.comment }}</p>
+                        <p class="review-date">{{ review.created_at|date:"d M Y" }}</p>
+                    </div>
+                {% endif %}
+            {% empty %}
+                <p class="text-gray-500 text-lg">❌ Все още няма ревюта за този курс.</p>
+            {% endfor %}
+
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'add_review' course.id %}" class="add-review-button">
+                    ➕ Добави ревю
+                </a>
+            {% else %}
+                <p class="text-gray-500 mt-4">🔒 Трябва да сте влезли, за да оставите ревю.</p>
+            {% endif %}
+        </div>
+
+
     </div>
+
 
     <script src="https://js.stripe.com/v3/"></script>
     <script>

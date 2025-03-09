@@ -5,13 +5,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from .forms import CourseForm
-from django.db.models import Q  # Импортирам за търсене с OR
+from django.db.models import  Avg, Q  # Импортирам за търсене с OR
 from django.http import JsonResponse
 import stripe
-from .models import Course, Order
 from django.urls import reverse
 from django.conf import settings
-from .models import Quiz, Question, QuizResult, CompletedLesson, Lesson
+from .models import Quiz, Question, QuizResult, CompletedLesson, Lesson, Course, Order, Review
+from .forms import ReviewForm
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -32,7 +32,8 @@ def courses_list(request):
 
     min_rating = request.GET.get('rating')  # Взимам стойността на рейтинга от заявката
 
-    courses = Course.objects.all()
+    # courses = Course.objects.all()
+    courses = Course.objects.annotate(average_rating=Avg("reviews__rating"))  # Анотация за среден рейтинг
 
     if query:
         courses = courses.filter(Q(title__icontains=query) | Q(description__icontains=query))
@@ -286,3 +287,24 @@ def mark_lesson_completed(request, lesson_id):
     CompletedLesson.objects.get_or_create(user=request.user, lesson=lesson)
     messages.success(request, "Урокът е маркиран като завършен! ✅")
     return redirect("my_courses")
+
+
+@login_required
+def add_review(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+
+    if request.method == "POST":
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.course = course
+            review.is_approved = False  # всички ревюта трябва да бъдат одобрени от админ
+            review.save()
+            messages.info(request, "Вашето ревю беше изпратено за одобрение! ✅")
+            # messages.success(request, "Вашето ревю беше добавено успешно!")
+            return redirect('course_detail', course_id=course.id)
+    else:
+        form = ReviewForm()
+
+    return render(request, "add_review.html", {"form": form, "course": course})

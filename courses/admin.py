@@ -50,8 +50,15 @@ class CompletedLessonAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ("user", "course", "rating", "created_at")
+    list_display = ("user", "course", "rating", "created_at", "is_approved")
     search_fields = ("user__username", "course__title")
+    list_filter = ("is_approved", "rating", "created_at", "comment")
+    actions = ["approve_reviews"]
+
+    @admin.action(description="Одобри избраните ревюта")
+    def approve_reviews(self, request, queryset):
+        queryset.update(is_approved=True)
+
 
 
 @admin.register(Order)

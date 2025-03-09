@@ -14,14 +14,24 @@
 <body class="bg-gray-100 text-gray-900">
 
 <!-- Flash Messages -->
+{#{% if messages %}#}
+{#    <div class="fixed top-4 right-4 z-50">#}
+{#        {% for message in messages %}#}
+{#            <div class="mb-2 px-4 py-3 rounded-lg text-white shadow-lg#}
+{#                        {% if message.tags == 'success' %} bg-green-500#}
+{#                        {% elif message.tags == 'error' %} bg-red-500#}
+{#                        {% elif message.tags == 'info' %} bg-blue-500#}
+{#                        {% endif %}">#}
+{#                {{ message }}#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    </div>#}
+{#{% endif %}#}
+
 {% if messages %}
-    <div class="fixed top-4 right-4 z-50">
+    <div id="messages-container">
         {% for message in messages %}
-            <div class="mb-2 px-4 py-3 rounded-lg text-white shadow-lg
-                        {% if message.tags == 'success' %} bg-green-500
-                        {% elif message.tags == 'error' %} bg-red-500
-                        {% elif message.tags == 'info' %} bg-blue-500
-                        {% endif %}">
+            <div class="custom-message">
                 {{ message }}
             </div>
         {% endfor %}
@@ -88,6 +98,18 @@
 <footer class="bg-blue-600 text-white text-center p-4 mt-10">
     <p>&copy; 2025 EduLearn - Всички права запазени.</p>
 </footer>
+
+{# скрипт за всички съобщения #}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let messages = document.querySelectorAll(".custom-message");
+        messages.forEach(function (message) {
+            setTimeout(function () {
+                message.classList.add("hide-message");
+            }, 5000);  // Изчезва след 5 секунди
+        });
+    });
+</script>
 
 </body>
 </html>

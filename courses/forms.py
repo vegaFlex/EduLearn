@@ -1,10 +1,10 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import UserProfile
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.password_validation import validate_password
+from .models import Course, Review, UserProfile
 from django import forms
-from .models import Course
+
 
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(
@@ -179,3 +179,24 @@ class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
         fields = ["title", "description", "category", "price", "video_url", "document"]
+
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['rating', 'comment']
+        labels = {
+            'rating': 'Оценка (1-5)',
+            'comment': 'Вашето ревю'
+        }
+        widgets = {
+            'rating': forms.Select(choices=[(i, i) for i in range(1, 6)], attrs={
+                'class': 'w-full p-2 border rounded-lg'
+            }),
+            'comment': forms.Textarea(attrs={
+                'class': 'w-full p-2 border rounded-lg',
+                'rows': 3,
+                'placeholder': 'Напишете вашето мнение за този курс...'
+            })
+        }
