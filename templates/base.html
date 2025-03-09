@@ -8,6 +8,8 @@
     <title>{% block title %}EduLearn{% endblock %}</title>
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <script src="{% static 'js/script.js' %}"></script>
+
 </head>
 <body class="bg-gray-100 text-gray-900">
 
@@ -26,49 +28,56 @@
     </div>
 {% endif %}
 
+{#<!-- Alpine.js за дропдаун меню -->#}
+{#<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>#}
+
 <!-- Навигация -->
 <nav class="bg-blue-600 text-white p-4">
     <div class="container mx-auto flex justify-between items-center">
         <a href="{% url 'home' %}" class="text-xl font-bold">EduLearn</a>
-        <ul class="flex space-x-4">
+        <ul class="flex space-x-6 items-center">
             <li><a href="{% url 'courses' %}" class="hover:underline">Курсове</a></li>
-            <li><a href="{% url 'admin:index' %}" class="hover:underline">Админ</a></li>
 
             {% if request.user.is_authenticated %}
-                {% if request.user.role == "teacher" %}
-                    <li>
-                        <a href="{% url 'create_course' %}" class="bg-green-500 px-3 py-1 rounded hover:bg-green-700">
-                            Добави курс
-                        </a>
-                    </li>
-                {% endif %}
-                <li><span class="font-semibold">{{ request.user.email }}</span></li>
-                <li>
-                    <a href="{% url 'profile' %}" class="hover:underline">Профил</a>
-                </li>
-                <li>
-                    <a href="{% url 'logout' %}" class="bg-red-500 px-3 py-2 rounded hover:bg-red-700 transition">
-                        Изход
-                    </a>
+                <!-- Дропдаун меню за потребителя -->
+                <li class="relative">
+                    <button id="user-dropdown-btn"
+                            class="user-dropdown-btn flex items-center px-4 py-2 rounded bg-blue-700 hover:bg-blue-800">
+                        <span class="font-semibold">{{ request.user.email }}</span>
+                        <!-- Стрелка (▼) -->
+                        <span class="dropdown-arrow ml-2">▼</span>
+                    </button>
+
+                    <!-- Дропдаун съдържание -->
+                    <div id="user-dropdown" class="user-dropdown hidden">
+                        <a href="{% url 'my_courses' %}" class="dropdown-item">📚 Моите курсове</a>
+
+                        {% if request.user.role == "teacher" %}
+                            <a href="{% url 'admin:index' %}" class="dropdown-item">⚙️ Админ</a>
+                        {% endif %}
+
+                        <a href="{% url 'logout' %}" class="dropdown-item text-red-600">🚪 Изход</a>
+                    </div>
                 </li>
             {% else %}
                 <li>
-                    <a href="{% url 'login' %}" class="bg-green-500 px-3 py-2 rounded hover:bg-green-700 transition">
+                    <a href="{% url 'login' %}"
+                       class="font-bold bg-green-500 px-4 py-2 rounded-lg hover:bg-green-700 transition">
                         Вход
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'register' %}"
-                       class="bg-yellow-500 px-3 py-2 rounded hover:bg-yellow-700 transition">
+                       class="font-bold bg-yellow-500 px-4 py-2 rounded-lg hover:bg-yellow-700 transition">
                         Регистрация
                     </a>
                 </li>
             {% endif %}
 
-
         </ul>
     </div>
 </nav>
+
 
 <!-- Основно съдържание -->
 <div class="container mx-auto p-6">
@@ -79,5 +88,6 @@
 <footer class="bg-blue-600 text-white text-center p-4 mt-10">
     <p>&copy; 2025 EduLearn - Всички права запазени.</p>
 </footer>
+
 </body>
 </html>

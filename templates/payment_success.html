@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Успешна покупка{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md text-center">
+    <h2 class="text-2xl font-bold text-green-600">✅ Вашата покупка беше успешна!</h2>
+
+    <p class="mt-4 text-lg font-bold">Детайли за поръчката:</p>
+    <ul class="mt-2 text-left">
+        <li><strong>Курс:</strong> {{ order.course.title }}</li>
+        <li><strong>Номер на поръчката:</strong> {{ order.id }}</li>
+        <li><strong>Цена:</strong> {{ order.amount }} лв.</li>
+        <li><strong>Дата на поръчка:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</li>
+    </ul>
+
+    <a href="{% url 'courses' %}" class="mt-6 block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        Върни се към курсовете
+    </a>
+</div>
+{% endblock %}

@@ -4,12 +4,20 @@ from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from .models import Course
 from .forms import CourseForm
 from django.db.models import Q  # Импортирам за търсене с OR
+from django.http import JsonResponse
+import stripe
+from .models import Course, Order
+from django.urls import reverse
+from django.conf import settings
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 def index(request):
     return render(request, "index.html")  # ще използва index.html за начална страница
+
 
 # def courses_list(request):
 #     courses = Course.objects.all()
@@ -37,7 +45,7 @@ def courses_list(request):
     if max_price:
         courses = courses.filter(price__lte=max_price)
 
-    if min_rating:  #Филтър по рейтинг
+    if min_rating:  # Филтър по рейтинг
         courses = courses.filter(rating__gte=min_rating)
 
     return render(request, "courses.html", {
@@ -108,13 +116,13 @@ def profile(request):
 
 @login_required
 def create_course(request):
-    #Само преподавателите могат да създават курсове
+    # Само преподавателите могат да създават курсове
     if request.user.role != 'teacher':
         messages.error(request, "Само преподаватели могат да създават курсове! ❌")
         return redirect("courses")
 
     if request.method == "POST":
-        form = CourseForm(request.POST, request.FILES)  #Добавено request.FILES за качване на файлове
+        form = CourseForm(request.POST, request.FILES)  # Добавено request.FILES за качване на файлове
         if form.is_valid():
             course = form.save(commit=False)
             course.creator = request.user  # Задавам текущия потребител като създател
@@ -129,9 +137,16 @@ def create_course(request):
     return render(request, "create_course.html", {"form": form})
 
 
+# def course_detail(request, course_id):
+#     course = get_object_or_404(Course, id=course_id)
+#     return render(request, "course_detail.html", {"course": course})
+
 def course_detail(request, course_id):
     course = get_object_or_404(Course, id=course_id)
-    return render(request, "course_detail.html", {"course": course})
+    return render(request, "course_detail.html", {
+        "course": course,
+        "STRIPE_PUBLISHABLE_KEY": settings.STRIPE_PUBLISHABLE_KEY
+    })
 
 
 @login_required
@@ -170,3 +185,69 @@ def delete_course(request, course_id):
 
     return render(request, "delete_course.html", {"course": course})
 
+
+@login_required
+def create_checkout_session(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+
+    # Създавам Stripe Checkout сесия
+    session = stripe.checkout.Session.create(
+        payment_method_types=["card"],
+        line_items=[
+            {
+                "price_data": {
+                    "currency": "bgn",
+                    "product_data": {
+                        "name": course.title,
+                    },
+                    "unit_amount": int(course.price * 100),  # Цената в стотинки
+                },
+                "quantity": 1,
+            }
+        ],
+        mode="payment",
+        success_url=request.build_absolute_uri(reverse("payment_success")) + "?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url=request.build_absolute_uri(reverse("payment_cancel")),
+    )
+
+    # Създавам поръчка в базата данни
+    order = Order.objects.create(
+        user=request.user,
+        course=course,
+        amount=course.price,
+        stripe_payment_id=session.id,
+        is_paid=False,
+    )
+
+    return JsonResponse({"sessionId": session.id})
+
+
+def payment_success(request):
+    session_id = request.GET.get("session_id")
+    if not session_id:
+        return redirect("courses")
+
+    # Проверка дали поръчката съществува
+    order = get_object_or_404(Order, stripe_payment_id=session_id)
+    order.is_paid = True
+    order.save()
+
+    # записвам потребителя в курса
+    order.course.students.add(order.user)
+
+    messages.success(request, "Успешно платихте курса!")
+    # return redirect("profile")
+    return render(request, "payment_success.html", {
+        "order": order
+    })
+
+
+def payment_cancel(request):
+    messages.error(request, "Плащането беше отменено.")
+    return redirect("courses")
+
+
+@login_required
+def my_courses(request):
+    courses = request.user.enrolled_courses.all()  # 🔹 Всички курсове, в които е записан потребителят
+    return render(request, "my_courses.html", {"courses": courses})

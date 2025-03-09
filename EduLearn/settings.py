@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 from decouple import config
 from django.contrib.messages import constants as messages
+import stripe
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
@@ -18,7 +19,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY', default='fallback-secret-key')
 
-DEBUG = True
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='fallback-stripe-secret-key')
+STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY', default='fallback-publishable-key')
+
+stripe.api_key = STRIPE_SECRET_KEY  # Настройка на Stripe API
+
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -124,3 +130,4 @@ CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE = False
 
 
+# print("Stripe Publishable Key:", STRIPE_PUBLISHABLE_KEY)  # Тестов принт

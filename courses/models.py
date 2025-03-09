@@ -70,6 +70,9 @@ class Course(models.Model):
     # creator = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
+    students = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="enrolled_courses",
+                                      blank=True)
+
     video_url = models.URLField(blank=True, null=True)  # Позволява линкове към YouTube/Vimeo
     document = models.FileField(upload_to="course_documents/", blank=True, null=True)  # Качване на PDF файлове
 
@@ -120,3 +123,14 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.course.title} ({self.rating})"
+
+class Order(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="orders")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="orders")
+    amount = models.DecimalField(max_digits=6, decimal_places=2)  # Цена на курса
+    stripe_payment_id = models.CharField(max_length=255, blank=True, null=True)  # ID на Stripe плащането
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_paid = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Поръчка: {self.user.email} - {self.course.title} - {self.amount} лв."

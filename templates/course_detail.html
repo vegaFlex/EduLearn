@@ -1,18 +1,99 @@
+{#{% extends "base.html" %}#}
+{#{% block title %}{{ course.title }}{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">#}
+{#    <h2 class="text-2xl font-bold mb-4">{{ course.title }}</h2>#}
+{#    <p class="text-gray-700">{{ course.description }}</p>#}
+{#    <p class="mt-2 font-bold">Цена: {{ course.price }} лв.</p>#}
+{##}
+{#    {% if course.video_url %}#}
+{#        <p class="mt-4"><a href="{{ course.video_url }}" class="text-blue-600 hover:underline">Гледай видеото</a></p>#}
+{#    {% endif %}#}
+{##}
+{#    {% if course.document %}#}
+{#        <p class="mt-4"><a href="{{ course.document.url }}" class="text-blue-600 hover:underline">Изтегли документа</a></p>#}
+{#    {% endif %}#}
+{#</div>#}
+{#{% endblock %}#}
+
+
 {% extends "base.html" %}
 {% block title %}{{ course.title }}{% endblock %}
 
 {% block content %}
-<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-4">{{ course.title }}</h2>
-    <p class="text-gray-700">{{ course.description }}</p>
-    <p class="mt-2 font-bold">Цена: {{ course.price }} лв.</p>
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-4">{{ course.title }}</h2>
+        <p class="text-gray-700">{{ course.description }}</p>
+        <p class="mt-2 font-bold">Цена: {{ course.price }} лв.</p>
 
-    {% if course.video_url %}
-        <p class="mt-4"><a href="{{ course.video_url }}" class="text-blue-600 hover:underline">Гледай видеото</a></p>
-    {% endif %}
+        {% if course.video_url %}
+            <p class="mt-4">
+                <a href="{{ course.video_url }}" class="text-blue-600 hover:underline">Гледай видеото</a>
+            </p>
+        {% endif %}
 
-    {% if course.document %}
-        <p class="mt-4"><a href="{{ course.document.url }}" class="text-blue-600 hover:underline">Изтегли документа</a></p>
-    {% endif %}
-</div>
+        {% if course.document %}
+            <p class="mt-4">
+                <a href="{{ course.document.url }}" class="text-blue-600 hover:underline">Изтегли документа</a>
+            </p>
+        {% endif %}
+
+        {#        <!-- Тества дали Stripe ключът се зарежда -->#}
+        {#        <p>Stripe ключ: <span id="stripe-key">{% if STRIPE_PUBLISHABLE_KEY %}{{ STRIPE_PUBLISHABLE_KEY }}{% else %}Няма ключ{% endif %}</span></p>#}
+
+
+        <!-- Stripe плащане -->
+        <form id="payment-form" class="mt-6">
+            <button id="checkout-button"
+                    class="bg-green-500 px-4 py-2 text-white rounded-lg hover:bg-green-700"
+                    data-stripe-key="{{ STRIPE_PUBLISHABLE_KEY }}">
+                Плати с карта
+            </button>
+        </form>
+    </div>
+
+    <!-- Зареждане на Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("Stripe.js е зареден!");
+
+            // Взимам Stripe ключа от HTML
+            {#const stripePublicKey = document.getElementById("stripe-key").innerText.trim();#}
+            const stripePublicKey = document.getElementById("checkout-button").dataset.stripeKey;
+            console.log("Stripe ключ:", stripePublicKey);
+
+            if (!stripePublicKey || stripePublicKey === "fallback-publishable-key") {
+                console.error("Грешка: Stripe ключът не е коректен!");
+                alert("Грешка: Stripe ключът не е зададен правилно. Свържи се с администратора.");
+                return;
+            }
+
+            const stripe = Stripe(stripePublicKey);
+
+            document.getElementById("checkout-button").addEventListener("click", function (e) {
+                e.preventDefault();
+                console.log("Бутонът за плащане е натиснат!");
+
+                fetch("{% url 'create_checkout_session' course.id %}", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}",
+                    },
+                })
+                    .then(response => response.json())
+                    .then(session => {
+                        console.log("Stripe сесия създадена:", session);
+                        return stripe.redirectToCheckout({sessionId: session.sessionId});
+                    })
+                    .catch(error => {
+                        console.error("Грешка при плащане:", error);
+                        alert("Грешка при свързване със Stripe. Опитай отново.");
+                    });
+            });
+        });
+    </script>
 {% endblock %}
+
