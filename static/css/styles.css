@@ -174,12 +174,21 @@
     text-align: center;
 }
 
-/* Цена */
+/*!* Цена *!*/
+/*.course-price {*/
+/*    font-size: 1.6rem;*/
+/*    font-weight: bold;*/
+/*    color: #d35400; !* По-забележим цвят за цена *!*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
 .course-price {
     font-size: 1.6rem;
     font-weight: bold;
     color: #d35400; /* По-забележим цвят за цена */
     margin-bottom: 10px;
+    padding-top: 10px; /* Добавя място над цената за линията */
+    border-top: 2px solid #ddd; /* Разделителна черта над цената */
 }
 
 /* Унифицирани бутони с различни цветове */
