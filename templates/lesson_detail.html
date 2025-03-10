@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ lesson.title }}{% endblock %}
+
+{% block content %}
+    <div class="lesson-detail-container">
+        <h2 class="lesson-title">📖 {{ lesson.title }}</h2>
+        <p class="lesson-content">{{ lesson.content }}</p>
+
+        {% if lesson.video_url %}
+            <div class="lesson-video">
+                <a href="{{ lesson.video_url }}" target="_blank" class="video-button">
+                    🎥 Гледай видеото
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

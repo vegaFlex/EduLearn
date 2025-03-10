@@ -308,3 +308,17 @@ def add_review(request, course_id):
         form = ReviewForm()
 
     return render(request, "add_review.html", {"form": form, "course": course})
+
+
+def course_lessons(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    lessons = course.lessons.all()  # Взима всички уроци за курса
+
+    return render(request, "course_lessons.html", {"course": course, "lessons": lessons})
+
+from django.shortcuts import render, get_object_or_404
+from .models import Lesson
+
+def lesson_detail(request, lesson_id):
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+    return render(request, "lesson_detail.html", {"lesson": lesson})

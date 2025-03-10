@@ -1,0 +1,224 @@
+{#{% extends "admin/base_site.html" %}#}
+{#{% block content %}#}
+{#<h1 class="text-2xl font-bold">📊 Статистика на платформата</h1>#}
+{##}
+{#<div class="grid grid-cols-2 gap-4 mt-4">#}
+{#    <div class="bg-blue-100 p-4 rounded-lg text-center">#}
+{#        <h2 class="text-xl font-bold">👥 Общо потребители</h2>#}
+{#        <p class="text-3xl font-semibold">{{ total_users }}</p>#}
+{#    </div>#}
+{#    <div class="bg-green-100 p-4 rounded-lg text-center">#}
+{#        <h2 class="text-xl font-bold">📚 Общо курсове</h2>#}
+{#        <p class="text-3xl font-semibold">{{ total_courses }}</p>#}
+{#    </div>#}
+{#    <div class="bg-yellow-100 p-4 rounded-lg text-center">#}
+{#        <h2 class="text-xl font-bold">🛒 Общо покупки</h2>#}
+{#        <p class="text-3xl font-semibold">{{ total_orders }}</p>#}
+{#    </div>#}
+{#    <div class="bg-red-100 p-4 rounded-lg text-center">#}
+{#        <h2 class="text-xl font-bold">💰 Общо приходи</h2>#}
+{#        <p class="text-3xl font-semibold">{{ total_revenue }} лв.</p>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#{% endblock %}#}
+
+{#-------------------------------------------------#}
+
+
+{#{% extends "admin/base_site.html" %}#}
+{#{% block content %}#}
+{#<h1 class="text-2xl font-bold">📊 Статистика на платформата</h1>#}
+{##}
+{#<div class="grid grid-cols-2 gap-4 mt-4">#}
+{#    <div class="bg-blue-100 p-4 rounded-lg text-center">#}
+{#        <h2 class="text-xl font-bold">👥 Общо потребители</h2>#}
+{#        <p class="text-3xl font-semibold">{{ total_users }}</p>#}
+{#    </div>#}
+{#    <div class="bg-green-100 p-4 rounded-lg text-center">#}
+{#        <h2 class="text-xl font-bold">📚 Общо курсове</h2>#}
+{#        <p class="text-3xl font-semibold">{{ total_courses }}</p>#}
+{#    </div>#}
+{#    <div class="bg-yellow-100 p-4 rounded-lg text-center">#}
+{#        <h2 class="text-xl font-bold">🛒 Общо покупки</h2>#}
+{#        <p class="text-3xl font-semibold">{{ total_orders }}</p>#}
+{#    </div>#}
+{#    <div class="bg-red-100 p-4 rounded-lg text-center">#}
+{#        <h2 class="text-xl font-bold">💰 Общо приходи</h2>#}
+{#        <p class="text-3xl font-semibold">{{ total_revenue }} лв.</p>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<!-- Графики за приходи и популярни курсове -->#}
+{#<h2 class="text-2xl font-bold mt-6">📊 Графики</h2>#}
+{#<canvas id="revenueChart" class="mt-4"></canvas>#}
+{#<canvas id="popularCoursesChart" class="mt-4"></canvas>#}
+{##}
+{#<!-- Зареждане на Chart.js -->#}
+{#<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>#}
+{##}
+{#<script>#}
+{#document.addEventListener("DOMContentLoaded", function () {#}
+{#    // Данни за приходи#}
+{#    var revenueCtx = document.getElementById('revenueChart').getContext('2d');#}
+{#    var revenueChart = new Chart(revenueCtx, {#}
+{#        type: 'bar',#}
+{#        data: {#}
+{#            labels: ["Януари", "Февруари", "Март", "Април", "Май"],#}
+{#            datasets: [{#}
+{#                label: 'Приходи (лв.)',#}
+{#                data: [500, 1000, 750, 1250, 900],#}
+{#                backgroundColor: 'rgba(54, 162, 235, 0.5)',#}
+{#                borderColor: 'rgba(54, 162, 235, 1)',#}
+{#                borderWidth: 1#}
+{#            }]#}
+{#        }#}
+{#    });#}
+{##}
+{#    // Данни за популярни курсове#}
+{#    var popularCtx = document.getElementById('popularCoursesChart').getContext('2d');#}
+{#    var popularCoursesChart = new Chart(popularCtx, {#}
+{#        type: 'pie',#}
+{#        data: {#}
+{#            labels: ["Python", "JavaScript", "Django", "React", "Machine Learning"],#}
+{#            datasets: [{#}
+{#                label: 'Популярни курсове',#}
+{#                data: [50, 30, 40, 60, 20],#}
+{#                backgroundColor: ['red', 'blue', 'green', 'orange', 'purple']#}
+{#            }]#}
+{#        }#}
+{#    });});#}
+{#</script>#}
+{##}
+{#{% endblock %}#}
+
+
+{% extends "admin/base_site.html" %}
+{% block content %}
+    <h1 class="text-2xl font-bold">📊 Статистика на платформата</h1>
+
+    <div class="grid grid-cols-2 gap-4 mt-4">
+        <div class="bg-blue-100 p-4 rounded-lg text-center">
+            <h2 class="text-xl font-bold">👥 Общо потребители</h2>
+            <p class="text-3xl font-semibold">{{ total_users }}</p>
+        </div>
+        <div class="bg-green-100 p-4 rounded-lg text-center">
+            <h2 class="text-xl font-bold">📚 Общо курсове</h2>
+            <p class="text-3xl font-semibold">{{ total_courses }}</p>
+        </div>
+        <div class="bg-yellow-100 p-4 rounded-lg text-center">
+            <h2 class="text-xl font-bold">🛒 Общо покупки</h2>
+            <p class="text-3xl font-semibold">{{ total_orders }}</p>
+        </div>
+        <div class="bg-red-100 p-4 rounded-lg text-center">
+            <h2 class="text-xl font-bold">💰 Общо приходи</h2>
+            <p class="text-3xl font-semibold">{{ total_revenue }} лв.</p>
+        </div>
+    </div>
+
+    <!-- 🔥 Графики за приходи и популярни курсове -->
+    <h2 class="text-2xl font-bold mt-6">📊 Графики</h2>
+
+    {#<canvas id="revenueChart" class="mt-4"></canvas>#}
+    {#<canvas id="popularCoursesChart" class="mt-4"></canvas>#}
+
+    <!-- Контейнер за графиките -->
+    <div class="flex flex-wrap justify-center gap-6 mt-4">
+        <div class="chart-container">
+            <canvas id="revenueChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="popularCoursesChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Зареждане на Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    {#    <script>#}
+    {#        document.addEventListener("DOMContentLoaded", function () {#}
+    {#            // 📊 Данни за приходи#}
+    {#            var revenueCtx = document.getElementById('revenueChart').getContext('2d');#}
+    {#            var revenueChart = new Chart(revenueCtx, {#}
+    {#                type: 'bar',#}
+    {#                data: {#}
+    {#                    labels: {{ revenue_labels|safe }},#}
+    {#                    datasets: [{#}
+    {#                        label: 'Приходи (лв.)',#}
+    {#                        data: {{ revenue_data|safe }},#}
+    {#                        backgroundColor: 'rgba(54, 162, 235, 0.5)',#}
+    {#                        borderColor: 'rgba(54, 162, 235, 1)',#}
+    {#                        borderWidth: 1#}
+    {#                    }]#}
+    {#                }#}
+    {#            });#}
+    {##}
+    {#            // 📊 Най-популярни курсове#}
+    {#            var popularCtx = document.getElementById('popularCoursesChart').getContext('2d');#}
+    {#            var popularCoursesChart = new Chart(popularCtx, {#}
+    {#                type: 'pie',#}
+    {#                data: {#}
+    {#                    labels: {{ popular_labels|safe }},#}
+    {#                    datasets: [{#}
+    {#                        label: 'Популярни курсове',#}
+    {#                        data: {{ popular_data|safe }},#}
+    {#                        backgroundColor: ['red', 'blue', 'green', 'orange', 'purple']#}
+    {#                    }]#}
+    {#                }#}
+    {#            });#}
+    {#        });#}
+    {#    </script>#}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 📊 Данни за приходи
+            var revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            var revenueChart = new Chart(revenueCtx, {
+                type: 'bar',
+                data: {
+                    labels: {{ revenue_labels|safe }},
+                    datasets: [{
+                        label: 'Приходи (лв.)',
+                        data: {{ revenue_data|safe }},
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // 📊 Най-популярни курсове
+            var popularCtx = document.getElementById('popularCoursesChart').getContext('2d');
+            var popularCoursesChart = new Chart(popularCtx, {
+                type: 'pie',
+                data: {
+                    labels: {{ popular_labels|safe }},
+                    datasets: [{
+                        label: 'Популярни курсове',
+                        data: {{ popular_data|safe }},
+                        backgroundColor: ['red', 'blue', 'green', 'orange', 'purple']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

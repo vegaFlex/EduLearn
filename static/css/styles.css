@@ -354,6 +354,24 @@
     background-color: white; /* Бял фон, за да не изглежда изрязано */
 }
 
+.lessons-button {
+    background: #f59e0b; /* Оранжев цвят */
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 12px;
+    color: white;
+    border-radius: 6px;
+    transition: background 0.3s ease-in-out;
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.lessons-button:hover {
+    background: #d97706; /* По-тъмен оранжев при ховър */
+}
+
+
 /*====================================*/
 /*css за ревютата за всеки курс*/
 .course-reviews {
@@ -787,3 +805,173 @@
     padding-top: 15px; /* Разстояние след лентата */
     margin-top: 30px; /* Разстояние от другите елементи */
 }
+
+/*=============================================================*/
+
+/*css за templates/course_lessons.html*/
+
+/* Контейнер за уроците */
+.lesson-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Заглавие на уроците */
+.lesson-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1e3a8a; /* Тъмносин */
+    margin-bottom: 20px;
+    border-bottom: 3px solid #1e3a8a;
+    padding-bottom: 10px;
+}
+
+/* Грид за уроците */
+.lesson-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Бутон за урок */
+.lesson-button {
+    display: block;
+    background: #007bff; /* Син */
+    color: white;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out;
+}
+
+.lesson-button:hover {
+    background: #0056b3;
+}
+
+/* Текст, ако няма уроци */
+.no-lessons {
+    font-size: 18px;
+    color: #6b7280;
+    margin-top: 20px;
+}
+
+/* Заглавие за тестове */
+.quiz-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #28a745; /* Зелен */
+    margin-top: 30px;
+    border-bottom: 3px solid #28a745;
+    padding-bottom: 8px;
+}
+
+/* Грид за тестовете */
+.quiz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Бутон за тест */
+.quiz-button {
+    display: block;
+    background: #28a745; /* Зелен */
+    color: white;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out;
+}
+
+.quiz-button:hover {
+    background: #1e7e34;
+}
+
+/* Текст, ако няма тестове */
+.no-quizzes {
+    font-size: 18px;
+    color: #6b7280;
+    margin-top: 20px;
+}
+/*========================================*/
+
+/*цсс за templates/lesson_detail.html*/
+
+/* Контейнер за урока */
+.lesson-detail-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Заглавие на урока */
+.lesson-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #1e3a8a; /* Тъмносин */
+    margin-bottom: 15px;
+    border-bottom: 3px solid #1e3a8a;
+    padding-bottom: 10px;
+}
+
+/* Съдържание на урока */
+.lesson-content {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Контейнер за видеото */
+.lesson-video {
+    margin-top: 20px;
+}
+
+/* Бутон за видеото */
+.video-button {
+    display: inline-block;
+    background: #007bff; /* Син */
+    color: white;
+    padding: 12px 18px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out;
+}
+
+.video-button:hover {
+    background: #0056b3;
+}
+/*=======================================*/
+
+/*цсс за графиките в templates/admin/dashboard.html*/
+
+/*.chart-canvas {*/
+/*    max-width: 400px !important;*/
+/*    max-height: 300px !important;*/
+/*}*/
+
+.chart-container {
+    width: 400px; /* Оптимален размер */
+    height: 300px; /* Ограничаване на височината */
+    max-width: 100%;
+    margin: 0 auto; /* Центриране */
+}
+
+/*================================*/

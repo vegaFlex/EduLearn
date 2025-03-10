@@ -55,6 +55,10 @@ class UserProfile(AbstractUser):
     def __str__(self):
         return self.email
 
+    class Meta:
+        verbose_name = "Потребител"
+        verbose_name_plural = "Потребители"
+
 
 class Course(models.Model):
     CATEGORY_CHOICES = [
@@ -92,6 +96,10 @@ class Course(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = "Курс"
+        verbose_name_plural = "Курсове"
+
 
 class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
@@ -103,6 +111,11 @@ class Lesson(models.Model):
     def __str__(self):
         return f"{self.course.title} - {self.title}"
 
+    class Meta:
+        verbose_name = "Урок"
+        verbose_name_plural = "Уроци"
+
+
 class Quiz(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='quizzes')
     title = models.CharField(max_length=255)
@@ -110,6 +123,11 @@ class Quiz(models.Model):
 
     def __str__(self):
         return f"{self.course.title} - {self.title}"
+
+    class Meta:
+        verbose_name = "Тест"
+        verbose_name_plural = "Тестове"
+
 
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
@@ -122,6 +140,11 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text
 
+    class Meta:
+        verbose_name = "Въпрос"
+        verbose_name_plural = "Въпроси"
+
+
 class QuizResult(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
@@ -131,6 +154,12 @@ class QuizResult(models.Model):
     def __str__(self):
         return f"{self.user.email} - {self.quiz.title} ({self.score}%)"
 
+    class Meta:
+        verbose_name = "Резултат от тест"
+        verbose_name_plural = "Резултати от тестове"
+
+
+
 class CompletedLesson(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     lesson = models.ForeignKey("Lesson", on_delete=models.CASCADE)
@@ -138,6 +167,8 @@ class CompletedLesson(models.Model):
 
     class Meta:
         unique_together = ("user", "lesson")
+        verbose_name = "Завършен урок"
+        verbose_name_plural = "Завършени уроци"
 
     def __str__(self):
         return f"{self.user.email} - {self.lesson.title} (Completed)"
@@ -155,6 +186,11 @@ class Review(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.course.title} ({self.rating})"
 
+    class Meta:
+        verbose_name = "Ревю"
+        verbose_name_plural = "Ревюта"
+
+
 class Order(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="orders")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="orders")
@@ -165,3 +201,7 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Поръчка: {self.user.email} - {self.course.title} - {self.amount} лв."
+
+    class Meta:
+        verbose_name = "Поръчка"
+        verbose_name_plural = "Поръчки"

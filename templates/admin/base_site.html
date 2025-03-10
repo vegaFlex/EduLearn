@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">EduLearn Администрация</a>
+    </h1>
+{% endblock %}
+
+{% block nav-global %}
+    <div class="dashboard-link">
+        <a href="/admin/dashboard/"
+           class="text-lg font-semibold text-white bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-800">
+            📊 Табло за статистики
+        </a>
+    </div>
+{% endblock %}

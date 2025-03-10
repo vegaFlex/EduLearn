@@ -104,6 +104,13 @@
                     </a>
                 {% endif %}
 
+                {% if course.lessons.all %}
+                    <a href="{% url 'course_lessons' course.id %}" class="course-button lessons-button">
+                        📚 Уроци
+                    </a>
+                {% endif %}
+
+
                 {% if course.document %}
                     <a href="{{ course.document.url }}" class="course-button document-button">
                         📄 Изтегли документа
