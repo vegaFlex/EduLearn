@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.db.models import Count, Sum
 from django.utils.safestring import mark_safe
 import json
+from .models import SliderImage
 
 
 @admin.register(UserProfile)
@@ -154,6 +155,12 @@ class OrderAdmin(admin.ModelAdmin):
 #         }
 #         return render(request, "admin/dashboard.html", context)
 
+@admin.register(SliderImage)
+class SliderImageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'course', 'is_active', 'created_at')
+    list_filter = ('is_active', 'created_at')
+    search_fields = ('title', 'text', 'course__title')
+
 # ==============================================================
 
 class CustomAdminSite(AdminSite):
@@ -213,5 +220,11 @@ admin_site.register(QuizResult, QuizResultAdmin)
 admin_site.register(Order, OrderAdmin)
 admin_site.register(Review, ReviewAdmin)
 admin_site.register(CompletedLesson, CompletedLessonAdmin)
+admin_site.register(SliderImage, SliderImageAdmin)
+
 
 # ========================================================================
+
+
+
+

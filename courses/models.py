@@ -205,3 +205,40 @@ class Order(models.Model):
     class Meta:
         verbose_name = "Поръчка"
         verbose_name_plural = "Поръчки"
+
+
+# class SliderImage(models.Model):
+#     title = models.CharField(max_length=255, blank=True, null=True, verbose_name="Заглавие")
+#     image = models.ImageField(upload_to='slider_images/', verbose_name="Снимка за слайдера")
+#     is_active = models.BooleanField(default=True, verbose_name="Активно")
+#     created_at = models.DateTimeField(auto_now_add=True)
+#
+#     class Meta:
+#         verbose_name = "Слайдер изображение"
+#         verbose_name_plural = "Слайдер изображения"
+#
+#     def __str__(self):
+#         return self.title if self.title else "Слайдър изображение"
+
+
+class SliderImage(models.Model):
+    title = models.CharField(max_length=255, blank=True, null=True, verbose_name="Заглавие")
+    image = models.ImageField(upload_to='slider_images/', verbose_name="Снимка за слайдера")
+    text = models.CharField(max_length=255, blank=True, null=True, verbose_name="Текст върху слайдера")
+    is_active = models.BooleanField(default=True, verbose_name="Активно")
+    course = models.ForeignKey("Course", on_delete=models.CASCADE, blank=True, null=True, verbose_name="Курс")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Слайдер изображение"
+        verbose_name_plural = "Слайдер изображения"
+
+    def __str__(self):
+        return self.title if self.title else "Слайдер изображение"
+
+    def get_course_url(self):
+        """ Връща URL-а на курса, ако е избран. """
+        if self.course:
+            return f"/courses/{self.course.id}/"
+        return "#"

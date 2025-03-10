@@ -23,4 +23,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // =============================
+// JavaScript за мобилното меню
+document.getElementById("mobile-menu-button").addEventListener("click", function () {
+    document.getElementById("nav-menu").classList.toggle("active");
+});
 
+// ========================

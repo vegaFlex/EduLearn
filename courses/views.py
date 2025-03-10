@@ -10,15 +10,20 @@ from django.http import JsonResponse
 import stripe
 from django.urls import reverse
 from django.conf import settings
-from .models import Quiz, Question, QuizResult, CompletedLesson, Lesson, Course, Order, Review
 from .forms import ReviewForm
+from django.shortcuts import render
+from .models import SliderImage
+from .models import Quiz, Question, QuizResult, CompletedLesson, Lesson, Course, Order, Review
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-def index(request):
-    return render(request, "index.html")  # ще използва index.html за начална страница
+# def index(request):
+#     return render(request, "index.html")  # ще използва index.html за начална страница
 
+def index(request):
+    slider_images = SliderImage.objects.filter(is_active=True)
+    return render(request, 'index.html', {'slider_images': slider_images})
 
 # def courses_list(request):
 #     courses = Course.objects.all()
@@ -316,9 +321,10 @@ def course_lessons(request, course_id):
 
     return render(request, "course_lessons.html", {"course": course, "lessons": lessons})
 
-from django.shortcuts import render, get_object_or_404
-from .models import Lesson
+
 
 def lesson_detail(request, lesson_id):
     lesson = get_object_or_404(Lesson, id=lesson_id)
     return render(request, "lesson_detail.html", {"lesson": lesson})
+
+

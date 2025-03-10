@@ -9,6 +9,9 @@
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
     <script src="{% static 'js/script.js' %}"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 
 </head>
 <body class="bg-gray-100 text-gray-900">
@@ -41,20 +44,64 @@
 {#<!-- Alpine.js за дропдаун меню -->#}
 {#<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>#}
 
+{#--------------------------------#}
+{#<!-- Навигация -->#}
+{#<nav class="bg-blue-600 text-white p-3">#}
+{#    <div class="container mx-auto flex justify-between items-center">#}
+{##}
+{#        <a href="{% url 'home' %}" class="text-xl font-bold">EduLearn</a>#}
+{##}
+{#        <a href="{% url 'home' %}" class="nav-logo">EduLearn</a>#}
+{##}
+{#        <ul class="flex space-x-6 items-center">#}
+{#            <li><a href="{% url 'courses' %}" class="nav-button">Курсове</a></li>#}
+{##}
+{#            {% if request.user.is_authenticated %}#}
+{#                <!-- Дропдаун меню за потребителя -->#}
+{#                <li class="relative">#}
+{#                    <button id="user-dropdown-btn" class="nav-button flex items-center">#}
+{#                        <span class="font-semibold">{{ request.user.email }}</span>#}
+{#                        <span class="dropdown-arrow ml-2">▼</span>#}
+{#                    </button>#}
+{##}
+{#                    <!-- Дропдаун съдържание -->#}
+{#                    <div id="user-dropdown" class="user-dropdown hidden">#}
+{#                        <a href="{% url 'my_courses' %}" class="dropdown-item">📚 Моите курсове</a>#}
+{##}
+{#                        {% if request.user.role == "teacher" %}#}
+{#                            <a href="{% url 'admin:index' %}" class="dropdown-item">⚙️ Админ</a>#}
+{#                        {% endif %}#}
+{##}
+{#                        <a href="{% url 'logout' %}" class="dropdown-item text-red-600">🚪 Изход</a>#}
+{#                    </div>#}
+{#                </li>#}
+{#            {% else %}#}
+{#                <li>#}
+{#                    <a href="{% url 'login' %}" class="nav-button">Вход</a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href="{% url 'register' %}" class="nav-button">Регистрация</a>#}
+{#                </li>#}
+{#            {% endif %}#}
+{#        </ul>#}
+{#    </div>#}
+{#</nav>#}
+
 <!-- Навигация -->
-<nav class="bg-blue-600 text-white p-4">
-    <div class="container mx-auto flex justify-between items-center">
-        <a href="{% url 'home' %}" class="text-xl font-bold">EduLearn</a>
-        <ul class="flex space-x-6 items-center">
-            <li><a href="{% url 'courses' %}" class="hover:underline">Курсове</a></li>
+<nav class="bg-blue-600 text-white py-2">
+    <div class="container mx-auto flex items-center justify-between">
+        <!-- Лого -->
+        <a href="{% url 'home' %}" class="nav-logo flex items-center">EduLearn</a>
+
+        <!-- Навигационни бутони -->
+        <ul class="flex items-center space-x-4">
+            <li><a href="{% url 'courses' %}" class="nav-button">Курсове</a></li>
 
             {% if request.user.is_authenticated %}
                 <!-- Дропдаун меню за потребителя -->
                 <li class="relative">
-                    <button id="user-dropdown-btn"
-                            class="user-dropdown-btn flex items-center px-4 py-2 rounded bg-blue-700 hover:bg-blue-800">
+                    <button id="user-dropdown-btn" class="nav-button flex items-center">
                         <span class="font-semibold">{{ request.user.email }}</span>
-                        <!-- Стрелка (▼) -->
                         <span class="dropdown-arrow ml-2">▼</span>
                     </button>
 
@@ -71,23 +118,15 @@
                 </li>
             {% else %}
                 <li>
-                    <a href="{% url 'login' %}"
-                       class="font-bold bg-green-500 px-4 py-2 rounded-lg hover:bg-green-700 transition">
-                        Вход
-                    </a>
+                    <a href="{% url 'login' %}" class="nav-button">Вход</a>
                 </li>
                 <li>
-                    <a href="{% url 'register' %}"
-                       class="font-bold bg-yellow-500 px-4 py-2 rounded-lg hover:bg-yellow-700 transition">
-                        Регистрация
-                    </a>
+                    <a href="{% url 'register' %}" class="nav-button">Регистрация</a>
                 </li>
             {% endif %}
-
         </ul>
     </div>
 </nav>
-
 
 <!-- Основно съдържание -->
 <div class="container mx-auto p-6">
@@ -110,6 +149,19 @@
         });
     });
 </script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+{# скрипт за динамичен слайдер#}
+{#<script>#}
+{#    document.addEventListener("DOMContentLoaded", function () {#}
+{#        let carousel = new bootstrap.Carousel(document.getElementById('eduLearnCarousel'), {#}
+{#            interval: 3000, // Автоматично превключване на всеки 3 секунди#}
+{#            wrap: true // Продължава безкрайно#}
+{#        });#}
+{#    });#}
+{#</script>#}
 
 </body>
 </html>
