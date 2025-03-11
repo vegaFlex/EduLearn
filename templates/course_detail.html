@@ -110,13 +110,6 @@
                     </a>
                 {% endif %}
 
-
-                {% if course.document %}
-                    <a href="{{ course.document.url }}" class="course-button document-button">
-                        📄 Изтегли документа
-                    </a>
-                {% endif %}
-
                 {% if course.quizzes.all %}
                     <button class="course-button quiz-toggle" onclick="toggleQuizDropdown(event)">📝 Тестове</button>
                     <ul id="quiz-dropdown" class="quiz-dropdown">
@@ -129,6 +122,15 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
+
+
+                {% if course.document %}
+                    <a href="{{ course.document.url }}" class="course-button document-button">
+                        📄 Изтегли документа
+                    </a>
+                {% endif %}
+
+
 
                 <p class="course-price">💰 Цена: <span class="highlighted-price">{{ course.price }} лв.</span></p>
 

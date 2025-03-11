@@ -1,20 +1,3 @@
-{#{% extends "base.html" %}#}
-{#{% block title %}Добре дошли в EduLearn{% endblock %}#}
-{##}
-{#{% block content %}#}
-{#<div class="text-center p-10">#}
-{#    <h1 class="text-4xl font-bold">Добре дошли в EduLearn! 🎓</h1>#}
-{#    <p class="mt-4 text-lg">Открийте курсове, развивайте умения и учете с най-добрите преподаватели.</p>#}
-{##}
-{#    <!-- Секция с бутони -->#}
-{#    <div class="mt-6">#}
-{#        <a href="{% url 'courses' %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-800">#}
-{#            Разгледай курсовете#}
-{#        </a>#}
-{#    </div>#}
-{#</div>#}
-{#{% endblock %}#}
-
 {% extends "base.html" %}
 {% block title %}Добре дошли в EduLearn{% endblock %}
 
@@ -27,7 +10,9 @@
                     <img src="{{ image.image.url }}" class="d-block w-100 slider-img" alt="{{ image.title }}">
 
                     {% if image.is_active %}
-                        <div class="carousel-caption d-none d-md-block">
+                        {#                        <div class="carousel-caption d-none d-md-block">#}
+                        <div class="carousel-caption">
+
                             {% if image.text %}
                                 <h5 class="slider-text">{{ image.text }}</h5>
                             {% endif %}
@@ -53,20 +38,6 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
         </button>
     </div>
-
-    {#    <!-- Основно съдържание -->#}
-    {#    <div class="text-center p-10">#}
-    {#        <h1 class="text-4xl font-bold">Добре дошли в EduLearn! 🎓</h1>#}
-    {#        <p class="mt-4 text-lg">Открийте курсове, развивайте умения и учете с най-добрите преподаватели.</p>#}
-    {##}
-    {#        <!-- Секция с бутони -->#}
-    {#        <div class="mt-6">#}
-    {#            <a href="{% url 'courses' %}"#}
-    {#               class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-800 transition">#}
-    {#                Разгледай курсовете#}
-    {#            </a>#}
-    {#        </div>#}
-    {#    </div>#}
 
     <!-- 🎓 Основно съдържание -->
     <div class="hero-section">

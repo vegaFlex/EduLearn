@@ -409,21 +409,22 @@
     color: #6b7280;
 }
 
-.add-review-button {
-    display: block;
-    text-align: center;
-    background: #2563eb;
-    color: white;
-    padding: 10px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 15px;
-}
+/*.add-review-button {*/
+/*    display: block;*/
+/*    text-align: center;*/
+/*    background: #2563eb;*/
+/*    color: white;*/
+/*    padding: 10px;*/
+/*    border-radius: 6px;*/
+/*    text-decoration: none;*/
+/*    font-weight: bold;*/
+/*    margin-top: 15px;*/
 
-.add-review-button:hover {
-    background: #1e40af;
-}
+/*}*/
+
+/*.add-review-button:hover {*/
+/*    background: #1e40af;*/
+/*}*/
 
 .login-message {
     color: #6b7280;
@@ -513,21 +514,21 @@
     margin-top: 5px;
 }
 
-.add-review-button {
-    display: block;
-    background-color: #007bff;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: background 0.3s ease;
-    margin-top: 15px;
-}
+/*.add-review-button {*/
+/*    display: block;*/
+/*    background-color: #007bff;*/
+/*    color: white;*/
+/*    text-align: center;*/
+/*    padding: 10px;*/
+/*    border-radius: 8px;*/
+/*    font-weight: bold;*/
+/*    transition: background 0.3s ease;*/
+/*    margin-top: 15px;*/
+/*}*/
 
-.add-review-button:hover {
-    background-color: #0056b3;
-}
+/*.add-review-button:hover {*/
+/*    background-color: #0056b3;*/
+/*}*/
 
 /*============================================*/
 
@@ -1044,6 +1045,93 @@
     border-radius: 5px;
 }
 
+/* Плавен преход на слайдера */
+.carousel-item {
+    transition: transform 1s ease-in-out !important;
+}
+
+/* Респонсив стилове за мобилни устройства */
+@media (max-width: 768px) {
+    .slider-container {
+        max-width: 100%; /* Използва цялата ширина на екрана */
+        padding: 0 10px; /* Малко вътрешно разстояние отстрани */
+    }
+
+    /* Гарантира, че заглавието ще се вижда на мобилни */
+    .slider-text {
+        font-size: 1.3rem; /* Намален размер на текста за мобилни */
+        padding: 8px 12px;
+        max-width: 90%;
+        top: 30%; /* Преместваме го по-надолу, за да не се скрива */
+        left: 50%;
+        transform: translate(-50%, -50%);
+        white-space: normal; /* Позволява пренасяне на текста */
+        text-align: center;
+        line-height: 1.3;
+    }
+
+    /* Ограничаване на височината на изображенията в слайдера */
+    .carousel-item img {
+        height: 280px; /* Намалена височина за мобилни */
+        object-fit: cover;
+    }
+
+    /* Бутонът "Виж повече" ще бъде видим и правилно подреден */
+    .slider-button {
+        display: inline-block;
+        font-size: 1rem; /* По-голям размер за четимост */
+        padding: 10px 15px;
+        background: #ffcc00; /* Жълт цвят */
+        color: #1e3a8a;
+        border-radius: 6px;
+        text-align: center;
+        text-decoration: none;
+        font-weight: bold;
+        position: relative; /* Премахваме абсолютното позициониране */
+        margin-top: 10px; /* Добавяме разстояние под текста */
+    }
+
+    .slider-button:hover {
+        background: #ffd633;
+        color: #0c1a4a;
+    }
+
+}
+
+/*-----------*/
+@media (max-width: 768px) {
+    .carousel-caption {
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        text-align: center !important;
+        width: 100% !important;
+        padding: 10px !important;
+    }
+
+    .carousel-caption h5 {
+        font-size: 1.4rem !important; /* Намалява заглавието за мобилни */
+        margin-bottom: 10px !important;
+    }
+
+    .carousel-caption .hero-button-container {
+        display: flex !important;
+        justify-content: center !important;
+    }
+
+    .hero-button-container a {
+        display: inline-block !important;
+        padding: 10px 15px !important;
+        font-size: 1rem !important;
+    }
+
+    .hero-button-container {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin-top: 120px !important; /* Раздалечава бутона от заглавието */
+    }
+}
 
 /*=========================================*/
 /*
@@ -1312,3 +1400,739 @@ nav {
 }
 
 /*==================================*/
+
+/*  Основен контейнер за "Моите курсове" */
+.my-courses-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/*  Ховър ефект върху контейнера */
+.my-courses-container:hover {
+    transform: scale(1.02);
+}
+
+/*  Заглавие */
+.my-courses-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #1e3a8a;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+}
+
+/*  Добавя декоративна черта под заглавието */
+.my-courses-title::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #ffcc00;
+    margin: 10px auto 0;
+    border-radius: 5px;
+}
+
+/*  Списък със записаните курсове */
+.my-courses-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+/*  Всеки елемент в списъка */
+.my-courses-item {
+    background: #f9fafb;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/*  Анимация при ховър */
+.my-courses-item:hover {
+    background: #e3e8ff;
+    transform: translateX(5px);
+}
+
+/*  Линковете към курсовете */
+.my-courses-link {
+    color: #1e3a8a;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease-in-out;
+}
+
+/*  Добавяне на иконка към линка */
+.my-courses-link::before {
+    content: "📖";
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+/*  Ховър ефект върху линковете */
+.my-courses-link:hover {
+    color: #ffcc00;
+}
+
+/*  Текст при липса на курсове */
+.no-courses-text {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1e3a8a;
+    background: #ffcc00;
+    padding: 10px;
+    border-radius: 8px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Анимация за плавно появяване */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/*=========================================*/
+
+/*  Основен контейнер */
+.course-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/*  Ховър ефект */
+.course-container:hover {
+    transform: scale(1.02);
+}
+
+/*  Заглавие на курса */
+.course-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1e3a8a;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Подчертаване на заглавието */
+.course-title-container::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #ffcc00;
+    margin: 10px auto;
+    border-radius: 5px;
+}
+
+/*  Основен контейнер с две колони */
+.course-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+/*  Лявата колона (Описание) */
+.course-left {
+    flex: 1;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #444;
+}
+
+/*  Дясната колона (Снимка, бутони, цена) */
+.course-right {
+    flex: 0.7;
+    text-align: center;
+}
+
+/*  Контейнер за изображението */
+.course-image-container {
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+/*  Стилизиране на изображението */
+.course-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/*  Цена на курса */
+.course-price {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ff4500;
+    margin: 15px 0;
+}
+
+/*  Бутон за плащане */
+.payment-button {
+    display: inline-block;
+    background: #ffcc00;
+    color: #1e3a8a;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    margin-top: 10px;
+}
+
+/*  Ховър ефект за бутона за плащане */
+.payment-button:hover {
+    background: #ffd633;
+    color: #0c1a4a;
+    transform: scale(1.05);
+}
+
+/*  Бутоните за видео, документи и тестове */
+.course-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+/*  Различни стилове за бутоните */
+.video-button {
+    background: #ff5733;
+    color: white;
+}
+
+.document-button {
+    background: #1e90ff;
+    color: white;
+}
+
+.lessons-button {
+    background: #28a745;
+    color: white;
+}
+
+/*  Ховър ефект за всички бутони */
+.course-button:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+/*  Дропдаун за тестовете */
+.quiz-dropdown {
+    display: none;
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/*  Видими линкове в дропдаун менюто */
+.quiz-dropdown a {
+    display: block;
+    padding: 8px;
+    font-size: 1rem;
+    color: #1e3a8a;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/*  Ховър ефект за тестовете */
+.quiz-dropdown a:hover {
+    background: #ffcc00;
+    color: #1e3a8a;
+}
+
+/*  Секция за ревюта */
+.course-reviews {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/*  Заглавие за ревюта */
+.reviews-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #1e3a8a;
+    margin-bottom: 10px;
+}
+
+/*  Контейнер за всяко ревю */
+.review-container {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/*  Информация за потребителя */
+.review-user {
+    font-weight: bold;
+    color: #444;
+}
+
+/*  Рейтинг */
+.review-rating {
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+/*  Текст на ревюто */
+.review-comment {
+    font-size: 1rem;
+    color: #555;
+}
+
+/*  Дата на ревюто */
+.review-date {
+    font-size: 0.9rem;
+    color: gray;
+}
+
+/*  Бутон за добавяне на ревю */
+/*.add-review-button {*/
+/*    display: inline-block;*/
+/*    background: #ffcc00;*/
+/*    color: #1e3a8a;*/
+/*    padding: 10px 20px;*/
+/*    font-size: 1.1rem;*/
+/*    font-weight: bold;*/
+/*    border-radius: 8px;*/
+/*    text-transform: uppercase;*/
+/*    transition: all 0.3s ease-in-out;*/
+/*    text-decoration: none;*/
+/*    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);*/
+/*}*/
+
+/*!*  Ховър ефект за бутона за добавяне на ревю *!*/
+/*.add-review-button:hover {*/
+/*    background: #ffd633;*/
+/*    color: #0c1a4a;*/
+/*    transform: scale(1.05);*/
+/*}*/
+
+/* 📱 Респонсив дизайн (мобилна версия) */
+@media (max-width: 768px) {
+    .course-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .course-left,
+    .course-right {
+        width: 100%;
+    }
+
+    .course-title {
+        font-size: 1.8rem;
+    }
+
+    .course-image {
+        max-width: 90%;
+        margin: 0 auto;
+    }
+
+    .course-button {
+        width: 100%;
+    }
+}
+
+/* Респонсив дизайн за мобилна версия */
+@media (max-width: 768px) {
+
+    /*  Центриране и по-добър padding */
+    .course-container {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    /*  Намаляване на заглавието за мобилни */
+    .course-title {
+        font-size: 1.6rem;
+        text-align: center;
+    }
+
+    /*  Центриране на заглавието */
+    .course-title-container::after {
+        margin: 10px auto;
+    }
+
+    /*  Промяна на курса в една колона */
+    .course-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    /*  Центриране на описанието */
+    .course-left {
+        width: 100%;
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    /*  Центриране и оразмеряване на снимката */
+    .course-right {
+        width: 100%;
+    }
+
+    .course-image-container {
+        max-width: 90%;
+        margin: 0 auto;
+    }
+
+    .course-image {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+    }
+
+    /*  Подравняване на бутоните */
+    .course-button {
+        width: 100%;
+        padding: 10px;
+        font-size: 1.1rem;
+    }
+
+    /*  Оразмеряване на бутона за плащане */
+    .payment-button {
+        width: 100%;
+        font-size: 1.2rem;
+    }
+
+    /*  Намаляване на разстоянието между елементите */
+    .course-price {
+        font-size: 1.2rem;
+        margin: 10px 0;
+    }
+
+    /*  Оптимизиране на ревютата */
+    .course-reviews {
+        padding: 15px;
+    }
+
+    .review-container {
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    /*  Респонсив дропдаун за тестовете */
+    .quiz-dropdown {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .quiz-link {
+        font-size: 1rem;
+    }
+
+    /*  Центриране на бутона за добавяне на ревю */
+    .add-review-button {
+        width: 100%;
+        text-align: center;
+    }
+
+}
+/*========================================*/
+/* цсс за templates/add_review.html*/
+
+/* Основен контейнер за формата */
+.review-container {
+    max-width: 600px;
+    margin: 30px auto;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* Заглавие на страницата */
+.review-container h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #1e3a8a;
+    margin-bottom: 15px;
+}
+
+/* Стилизация на формата */
+.review-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Стилизация на полетата */
+.review-container form input,
+.review-container form textarea,
+.review-container form select {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: 0.3s ease-in-out;
+}
+
+/* Ефект при фокусиране */
+.review-container form input:focus,
+.review-container form textarea:focus,
+.review-container form select:focus {
+    border-color: #2563eb;
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(37, 99, 235, 0.4);
+}
+
+/* Бутон "Изпрати" */
+.review-container button {
+    background: #ffcc00;
+    color: #1e3a8a;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* Ховър ефект за бутона */
+.review-container button:hover {
+    background: #ffd633;
+    color: #0c1a4a;
+    transform: scale(1.05);
+}
+
+/* Респонсив дизайн за мобилни устройства */
+@media (max-width: 768px) {
+    .review-container {
+        max-width: 90%;
+        padding: 20px;
+    }
+
+    .review-container h2 {
+        font-size: 1.6rem;
+    }
+
+    .review-container button {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}
+/*===================================*/
+
+/*  Контейнер за всички курсове */
+.all-courses-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/*  Заглавие "Всички курсове" */
+.all-courses-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #1e3a8a; /* Тъмносиньо */
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #ffcc00; /* Жълта линия под заглавието */
+}
+
+/*  Грид оформление само за тази страница */
+.all-courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Адаптивни колони */
+    gap: 25px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/*  Карти на курсовете */
+.course-card {
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.course-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/*  Снимка на курса */
+.course-image-container {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-bottom: 3px solid #1e3a8a;
+}
+
+.course-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*  Заглавие на курса */
+.course-card h2 {
+    font-size: 1.3rem;
+    color: #1e3a8a;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0;
+}
+
+/*  Среден рейтинг */
+.course-rating {
+    color: #ffcc00;
+    font-weight: bold;
+    text-align: center;
+}
+
+/*  Цена */
+.course-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2563eb;
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+/*  Специален бутон "Виж повече" само за страницата с всички курсове */
+.all-courses-container .course-list-button {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    padding: 12px;
+    background: linear-gradient(135deg, #ffcc00, #ffb700);
+    color: #1e3a8a;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+.all-courses-container .course-list-button:hover {
+    background: linear-gradient(135deg, #ffd633, #ffcc00);
+    transform: scale(1.05);
+}
+
+
+.course-button:hover {
+    background: linear-gradient(135deg, #ffd633, #ffcc00);
+    transform: scale(1.05);
+}
+
+/*  Бутоните "Редактирай" и "Изтрий" само в страницата "Всички курсове" */
+.course-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.course-actions a {
+    padding: 8px 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+}
+
+.course-actions a:hover {
+    transform: scale(1.05);
+}
+
+/*  Бутон "Редактирай" */
+.course-actions .edit-button {
+    background: #ffcc00;
+    color: #1e3a8a;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+}
+
+.course-actions .edit-button:hover {
+    background: #ffd633;
+}
+
+/*  Бутон "Изтрий" */
+.course-actions .delete-button {
+    background: #ff4d4d;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+}
+
+.course-actions .delete-button:hover {
+    background: #e60000;
+}
+/*=====================================*/
+
+/*цсс за центриране на някой елементи(пише ги долу) в templates/course_detail.html*/
+
+/* Центриране на заглавието "Ревюта" */
+.review-section {
+    text-align: center; /* Центрира съдържанието */
+}
+
+/*  Центриране на бутона "Добави ревю" */
+.add-review-button {
+    display: inline-block;
+    margin: 15px auto; /* Центрира бутона хоризонтално */
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #ffcc00, #ffb700);
+    color: #1e3a8a;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+.add-review-button:hover {
+    background: linear-gradient(135deg, #ffd633, #ffcc00);
+    transform: scale(1.05);
+}
+
+/*====================================*/

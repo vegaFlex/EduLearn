@@ -1,22 +1,45 @@
+{#{% extends "base.html" %}#}
+{#{% block title %}Моите курсове{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">#}
+{#    <h2 class="text-2xl font-bold mb-4">📚 Моите курсове</h2>#}
+{##}
+{#    {% if courses %}#}
+{#        <ul class="list-disc pl-6">#}
+{#            {% for course in courses %}#}
+{#                <li class="mb-2">#}
+{#                    <a href="{% url 'course_detail' course.id %}" class="text-blue-600 hover:underline">#}
+{#                        {{ course.title }}#}
+{#                    </a>#}
+{#                </li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+{#    {% else %}#}
+{#        <p>Все още не сте записани в нито един курс.</p>#}
+{#    {% endif %}#}
+{#</div>#}
+{#{% endblock %}#}
+
 {% extends "base.html" %}
 {% block title %}Моите курсове{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-4">📚 Моите курсове</h2>
+<div class="my-courses-container">
+    <h2 class="my-courses-title">📚 Моите курсове</h2>
 
     {% if courses %}
-        <ul class="list-disc pl-6">
+        <ul class="my-courses-list">
             {% for course in courses %}
-                <li class="mb-2">
-                    <a href="{% url 'course_detail' course.id %}" class="text-blue-600 hover:underline">
+                <li class="my-courses-item">
+                    <a href="{% url 'course_detail' course.id %}" class="my-courses-link">
                         {{ course.title }}
                     </a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>Все още не сте записани в нито един курс.</p>
+        <p class="no-courses-text">Все още не сте записани в нито един курс.</p>
     {% endif %}
 </div>
 {% endblock %}
