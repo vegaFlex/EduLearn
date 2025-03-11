@@ -87,14 +87,130 @@
 {#    </div>#}
 {#</nav>#}
 
+{#<!-- Навигация -->#}
+{#<nav class="bg-blue-600 text-white py-2">#}
+{#    <div class="container mx-auto flex items-center justify-between">#}
+{#        <!-- Лого -->#}
+{#        <a href="{% url 'home' %}" class="nav-logo flex items-center">EduLearn</a>#}
+{##}
+{#        <!-- Навигационни бутони -->#}
+{#        <ul class="flex items-center space-x-4">#}
+{#            <li><a href="{% url 'courses' %}" class="nav-button">Курсове</a></li>#}
+{##}
+{#            {% if request.user.is_authenticated %}#}
+{#                <!-- Дропдаун меню за потребителя -->#}
+{#                <li class="relative">#}
+{#                    <button id="user-dropdown-btn" class="nav-button flex items-center">#}
+{#                        <span class="font-semibold">{{ request.user.email }}</span>#}
+{#                        <span class="dropdown-arrow ml-2">▼</span>#}
+{#                    </button>#}
+{##}
+{#                    <!-- Дропдаун съдържание -->#}
+{#                    <div id="user-dropdown" class="user-dropdown hidden">#}
+{#                        <a href="{% url 'my_courses' %}" class="dropdown-item">📚 Моите курсове</a>#}
+{##}
+{#                        {% if request.user.role == "teacher" %}#}
+{#                            <a href="{% url 'admin:index' %}" class="dropdown-item">⚙️ Админ</a>#}
+{#                        {% endif %}#}
+{##}
+{#                        <a href="{% url 'logout' %}" class="dropdown-item text-red-600">🚪 Изход</a>#}
+{#                    </div>#}
+{#                </li>#}
+{#            {% else %}#}
+{#                <li>#}
+{#                    <a href="{% url 'login' %}" class="nav-button">Вход</a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href="{% url 'register' %}" class="nav-button">Регистрация</a>#}
+{#                </li>#}
+{#            {% endif %}#}
+{#        </ul>#}
+{#    </div>#}
+{#</nav>#}
+
+{#<!-- Навигация -->#}
+{#<nav class="bg-blue-600 text-white py-2">#}
+{#    <div class="container mx-auto flex items-center justify-between">#}
+{#        <!-- Лого -->#}
+{#        <a href="{% url 'home' %}" class="nav-logo flex items-center">EduLearn</a>#}
+{##}
+{#        <!-- Бутон за мобилно меню (само на мобилни устройства) -->#}
+{#        <button id="mobile-menu-button" class="md:hidden text-white text-2xl focus:outline-none">#}
+{#            ☰#}
+{#        </button>#}
+{##}
+{#        <!-- Навигационни бутони за ДЕСКТОП -->#}
+{#        <ul id="nav-menu" class="hidden md:flex items-center space-x-4">#}
+{#            <li><a href="{% url 'courses' %}" class="nav-button">Курсове</a></li>#}
+{##}
+{#            {% if request.user.is_authenticated %}#}
+{#                <!-- Дропдаун меню за потребителя -->#}
+{#                <li class="relative">#}
+{#                    <button id="mobile-user-dropdown-btn" class="nav-button flex items-center">#}
+{#                        <span class="font-semibold">{{ request.user.email }}</span>#}
+{#                        <span class="dropdown-arrow ml-2">▼</span>#}
+{#                    </button>#}
+{##}
+{#                    <!-- Дропдаун съдържание за мобилна версия -->#}
+{#                    <div id="mobile-user-dropdown" class="user-dropdown hidden">#}
+{#                        <a href="{% url 'my_courses' %}" class="dropdown-item">📚 Моите курсове</a>#}
+{##}
+{#                        {% if request.user.role == "teacher" %}#}
+{#                            <a href="{% url 'admin:index' %}" class="dropdown-item">⚙️ Админ</a>#}
+{#                        {% endif %}#}
+{##}
+{#                        <a href="{% url 'logout' %}" class="dropdown-item text-red-600">🚪 Изход</a>#}
+{#                    </div>#}
+{#                </li>#}
+{##}
+{#            {% else %}#}
+{#                <li><a href="{% url 'login' %}" class="nav-button">Вход</a></li>#}
+{#                <li><a href="{% url 'register' %}" class="nav-button">Регистрация</a></li>#}
+{#            {% endif %}#}
+{#        </ul>#}
+{#    </div>#}
+{##}
+{#    <!--  Навигационни бутони за МОБИЛНИ -->#}
+{#    <ul id="mobile-nav-menu" class="hidden flex-col items-center bg-blue-700 text-white py-4 space-y-2 md:hidden">#}
+{#        <li><a href="{% url 'courses' %}" class="nav-button block w-full text-center">Курсове</a></li>#}
+{##}
+{#        {% if request.user.is_authenticated %}#}
+{#            <!--  Бутон за профила в мобилното меню -->#}
+{#            <li class="relative w-full text-center">#}
+{#                <button id="mobile-user-dropdown-btn" class="nav-button flex justify-center w-full">#}
+{#                    <span class="font-semibold">{{ request.user.email }}</span>#}
+{#                    <span class="dropdown-arrow ml-2">▼</span>#}
+{#                </button>#}
+{##}
+{#                <!--  Дропдаун меню за мобилното меню -->#}
+{#                <ul id="mobile-user-dropdown" class="hidden bg-white text-blue-700 rounded-lg shadow-lg mt-1">#}
+{#                    <li><a href="{% url 'my_courses' %}" class="dropdown-item block px-4 py-2">📚 Моите курсове</a></li>#}
+{#                    {% if request.user.role == "teacher" %}#}
+{#                        <li><a href="{% url 'admin:index' %}" class="dropdown-item block px-4 py-2">⚙️ Админ</a></li>#}
+{#                    {% endif %}#}
+{#                    <li><a href="{% url 'logout' %}" class="dropdown-item block px-4 py-2 text-red-600">🚪 Изход</a></li>#}
+{#                </ul>#}
+{#            </li>#}
+{#        {% else %}#}
+{#            <li><a href="{% url 'login' %}" class="nav-button">Вход</a></li>#}
+{#            <li><a href="{% url 'register' %}" class="nav-button">Регистрация</a></li>#}
+{#        {% endif %}#}
+{#    </ul>#}
+{#</nav>#}
+
 <!-- Навигация -->
 <nav class="bg-blue-600 text-white py-2">
     <div class="container mx-auto flex items-center justify-between">
         <!-- Лого -->
         <a href="{% url 'home' %}" class="nav-logo flex items-center">EduLearn</a>
 
-        <!-- Навигационни бутони -->
-        <ul class="flex items-center space-x-4">
+        <!-- Бутон за мобилно меню (само на мобилни устройства) -->
+        <button id="mobile-menu-button" class="md:hidden text-white text-2xl focus:outline-none">
+            ☰
+        </button>
+
+        <!-- Навигационни бутони за ДЕСКТОП -->
+        <ul id="nav-menu" class="hidden md:flex items-center space-x-4">
             <li><a href="{% url 'courses' %}" class="nav-button">Курсове</a></li>
 
             {% if request.user.is_authenticated %}
@@ -117,16 +233,43 @@
                     </div>
                 </li>
             {% else %}
-                <li>
-                    <a href="{% url 'login' %}" class="nav-button">Вход</a>
-                </li>
-                <li>
-                    <a href="{% url 'register' %}" class="nav-button">Регистрация</a>
-                </li>
+                <li><a href="{% url 'login' %}" class="nav-button">Вход</a></li>
+                <li><a href="{% url 'register' %}" class="nav-button">Регистрация</a></li>
             {% endif %}
         </ul>
     </div>
+
+    <!-- 📌 Навигационни бутони за МОБИЛНИ -->
+    <ul id="mobile-nav-menu" class="hidden flex-col items-center bg-blue-700 text-white py-4 space-y-2 md:hidden">
+        <li><a href="{% url 'courses' %}" class="nav-button block w-full text-center">Курсове</a></li>
+
+        {% if request.user.is_authenticated %}
+            <li class="relative">
+                <!-- 📌 Бутон за мобилния дропдаун -->
+                <button id="mobile-user-dropdown-btn" class="nav-button flex items-center">
+                    <span class="font-semibold">{{ request.user.email }}</span>
+                    <span class="dropdown-arrow ml-2">▼</span>
+                </button>
+
+                <!-- 📌 Дропдаун съдържание за мобилна версия -->
+                <div id="mobile-user-dropdown" class="user-dropdown hidden">
+                    <a href="{% url 'my_courses' %}" class="dropdown-item">📚 Моите курсове</a>
+
+                    {% if request.user.role == "teacher" %}
+                        <a href="{% url 'admin:index' %}" class="dropdown-item">⚙️ Админ</a>
+                    {% endif %}
+
+                    <a href="{% url 'logout' %}" class="dropdown-item text-red-600">🚪 Изход</a>
+                </div>
+            </li>
+        {% else %}
+            <li><a href="{% url 'login' %}" class="nav-button">Вход</a></li>
+            <li><a href="{% url 'register' %}" class="nav-button">Регистрация</a></li>
+        {% endif %}
+    </ul>
+
 </nav>
+
 
 <!-- Основно съдържание -->
 <div class="container mx-auto p-6">
